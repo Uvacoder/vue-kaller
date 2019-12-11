@@ -1,16 +1,11 @@
 <template>
     <div class="body">
         <v-container>
-            <v-row no-gutters>
-                <v-col v-for="photo in photos" class="phototest">
-                    <v-card
-                            class="mx-auto px-2 pt-2"
-                            :max-width="photo.width/2.7"
-                    >
+            <div class="d-flex flex-wrap justify-lg-center">
+                <div v-for="photo in photos" class="phototest">
+                    <v-card class="px-2 pt-2" :width="photo.width/(photo.height/height)">
                         <v-img
-                                :max-height="400"
-                                contain
-                                class="white--text align-end"
+                                :height="height"
                                 :src="'http://kaller.test'+photo.path"
                         >
                         </v-img>
@@ -22,8 +17,8 @@
                             <div>{{photo.shutterspeed}}s</div>
                         </v-card-text>
                     </v-card>
-                </v-col>
-            </v-row>
+                </div>
+            </div>
         </v-container>
     </div>
 </template>
@@ -36,12 +31,15 @@
         data() {
             return {
                 photos: null,
+                height: 470
             }
         },
         methods: {
             async requestPhotos() {
-                let photos = await api.loadPhotos({limit: 20 });
+                let photos = await api.loadPhotos({limit: 100 });
                 console.log(photos);
+                let photo = photos[0];
+                console.log(photo.width/(photo.height/400));
                 this.photos = photos;
             },
         },
@@ -53,7 +51,7 @@
 
 <style scoped>
     .phototest{
-        padding: 10px;
+        padding: 8px;
     }
 
     .body{
