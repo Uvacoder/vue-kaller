@@ -1,11 +1,12 @@
 <template>
     <div class="body">
         <v-container>
-            <div class="d-flex flex-wrap justify-lg-center">
-                <div v-for="photo in photos" class="phototest">
-                    <v-card class="px-2 pt-2" :width="photo.width/(photo.height/height)">
+
+            <v-row no-gutters>
+                <v-col v-for="photo in photos" :class="photo.col+' phototest'">
+                    <v-card class="px-2 pt-2">
                         <v-img
-                                :height="height"
+                                contain
                                 :src="'http://kaller.test'+photo.path"
                         >
                         </v-img>
@@ -17,8 +18,8 @@
                             <div>{{photo.shutterspeed}}s</div>
                         </v-card-text>
                     </v-card>
-                </div>
-            </div>
+                </v-col>
+            </v-row>
         </v-container>
     </div>
 </template>
@@ -31,7 +32,7 @@
         data() {
             return {
                 photos: null,
-                height: 470
+                height: 500
             }
         },
         methods: {
