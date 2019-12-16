@@ -2,7 +2,7 @@
     <div class="body">
 
         <v-overlay :value="overlay" opacity="0.9" >
-            <overlay :photos="photos" :overlay-prop="overlayProp" :window-size="windowSize" @overlayevent="test"></overlay>
+            <overlay :photos="photos" :overlay-prop="overlayProp" :window-size="windowSize" @overlayevent="test" @next="nextOverlay()" @prev="prevOverlay"></overlay>
         </v-overlay>
 
         <v-container>
@@ -61,7 +61,7 @@
         },
         methods: {
             async requestPhotos() {
-                let photos = await api.loadPhotos({limit: 7});
+                let photos = await api.loadPhotos({limit: ''});
                 console.log(photos[0].id);
                 this.photos = photos;
             },
@@ -70,10 +70,12 @@
                 this.overlayProp.path = this.photos[index].path;
                 this.overlayProp.height = this.photos[index].height;
                 let width = this.photos[index].width / (this.photos[index].height / (this.windowSize.y * 0.9));
-                if ((this.overlayProp.width / (this.overlayProp.height / (this.windowSize.y * 0.9))) > this.windowSize.x * 0.9) {
-                    this.overlayProp.width = 'auto';
+                if (width > this.windowSize.x * 0.9) {
+                    console.log('mode 1');
+                    this.overlayProp.height = 'auto';
                     this.overlayProp.width = this.windowSize.x * 0.9;
                 } else {
+                    console.log('mode 1');
                     this.overlayProp.width = width
                 }
                 this.overlay = true;
@@ -85,7 +87,17 @@
             test(value) {
                 this.overlay = value;
                 this.$router.push('/photography')
-            }
+            },
+            nextOverlay() {
+                let index = this.overlayProp.index;
+                this.showOverlay(index + 1);
+                console.log('next');
+            },
+            prevOverlay() {
+                let index = this.overlayProp.index;
+                this.showOverlay(index - 1);
+                console.log('prev');
+            },
         },
         created() {
             this.requestPhotos()

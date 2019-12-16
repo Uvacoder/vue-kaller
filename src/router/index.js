@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import photo from '../components/photo.vue'
+import homepage from '../components/home.vue'
 
 Vue.use(VueRouter);
 
@@ -30,6 +31,11 @@ const routes = [
     path: '/photography*',
     name: 'Photography',
     component: photo
+  },
+  {
+    path: '/',
+    name: 'Kaller',
+    component: homepage
   }
 ];
 

@@ -44,14 +44,16 @@
                 this.$router.push('/photography/'+this.photos[index].filename);
             },
             nextOverlay() {
-                let index = this.overlayProp.index;
-                this.showOverlay(index + 1);
+                // let index = this.overlayProp.index;
+                // this.showOverlay(index + 1);
                 console.log('next');
+                this.$emit('next')
             },
             prevOverlay() {
-                let index = this.overlayProp.index;
-                this.showOverlay(index - 1);
+                // let index = this.overlayProp.index;
+                // this.showOverlay(index - 1);
                 console.log('prev');
+                this.$emit('prev')
             },
             hideOverlay(){
                 this.$emit('overlayevent',false)
