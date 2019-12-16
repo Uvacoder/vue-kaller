@@ -22,15 +22,20 @@ const routes = [
     }
   },
   {
-    path: '/',
-    name: 'Home',
+    path: '/photography/:id',
+    name: 'Photography',
+    component: photo
+  },
+  {
+    path: '/photography*',
+    name: 'Photography',
     component: photo
   }
 ];
 
 const router = new VueRouter({
   base: process.env.BASE_URL,
-  routes
-})
+  routes,
+});
 
 export default router
