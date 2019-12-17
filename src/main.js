@@ -8,7 +8,7 @@ import hostMixin from './services/hostMixin'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$host = hostMixin.host
+Vue.prototype.$host = hostMixin.host;
 
 new Vue({
   router,
