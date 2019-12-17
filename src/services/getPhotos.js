@@ -1,7 +1,7 @@
 const getPhotos = async function(data) {
     console.log('api connecting');
     return new Promise(async (resolve, reject) => {
-        const response = await fetch("http://kaller.test/api/photos", {
+        const response = await fetch("/api/photos", {
             method: "POST",
             mode: "cors",
             headers: {

@@ -12,7 +12,7 @@
                        :class="'col-lg-'+photo.col+' col-md-'+photo.col*2+' col-sm-12 phototest'" v-bind:key="photo.id">
                     <v-card class="px-2 pt-2" @click="showOverlay(index)">
                         <v-img
-                                :src="'http://kaller.test'+photo.path"
+                                :src="photo.path"
                         >
                         </v-img>
 
@@ -50,13 +50,6 @@
                     x: 0,
                     y: 0,
                 },
-                menuItems: [
-                    { title: 'Home', path: '/home', icon: 'home' },
-                    { title: 'Sign Up', path: '/signup', icon: 'face' },
-                    { title: 'Sign In', path: '/signin', icon: 'lock_open' }
-                ],
-                sidebar: false,
-                appTitle: 'Awesome App',
             }
         },
         methods: {

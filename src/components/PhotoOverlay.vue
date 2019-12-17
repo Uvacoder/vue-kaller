@@ -6,7 +6,7 @@
             <div @click="hideOverlay()" class="exit"></div>
             <div class="d-inline box" :style="'width: '+this.overlayProp.width+8+'px'">
                 <v-img
-                        :src="'http://kaller.test'+overlayProp.path"
+                        :src="overlayProp.path"
                         :height="windowSize.y*0.9"
                         @click="hideOverlay()"
                 >
@@ -28,30 +28,11 @@
             overlayProp: Object
         },
         methods: {
-            showOverlay(index) {
-                this.overlayProp.index = index;
-                this.overlayProp.path = this.photos[index].path;
-                this.overlayProp.height = this.photos[index].height;
-                let width = this.photos[index].width / (this.photos[index].height / (this.windowSize.y * 0.9));
-                if ((this.overlayProp.width / (this.overlayProp.height / (this.windowSize.y * 0.9))) > this.windowSize.x * 0.9) {
-                    this.overlayProp.width = 'auto';
-                    this.overlayProp.width = this.windowSize.x * 0.9;
-                } else {
-                    this.overlayProp.width = width
-                }
-                this.overlay = true;
-                console.log('show');
-                this.$router.push('/photography/'+this.photos[index].filename);
-            },
             nextOverlay() {
-                // let index = this.overlayProp.index;
-                // this.showOverlay(index + 1);
                 console.log('next');
                 this.$emit('next')
             },
             prevOverlay() {
-                // let index = this.overlayProp.index;
-                // this.showOverlay(index - 1);
                 console.log('prev');
                 this.$emit('prev')
             },
