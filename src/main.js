@@ -4,10 +4,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import hostMixin from './services/hostMixin'
 
 Vue.config.productionTip = false
 
-Vue.prototype.$host = 'http://kaller.test'
+Vue.prototype.$host = hostMixin.host
 
 new Vue({
   router,
