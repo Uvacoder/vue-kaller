@@ -6,7 +6,7 @@
             <div @click="hideOverlay()" class="exit"></div>
             <div class="d-inline box" :style="'width: '+this.overlayProp.width+8+'px'">
                 <v-img
-                        :src="overlayProp.path"
+                        :src="$host + overlayProp.path"
                         :height="windowSize.y*0.9"
                         @click="hideOverlay()"
                 >

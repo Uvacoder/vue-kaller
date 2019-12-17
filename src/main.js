@@ -7,6 +7,8 @@ import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
+Vue.prototype.$host = 'http://kaller.test'
+
 new Vue({
   router,
   store,

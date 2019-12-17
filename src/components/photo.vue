@@ -12,7 +12,7 @@
                        :class="'col-lg-'+photo.col+' col-md-'+photo.col*2+' col-sm-12 phototest'" v-bind:key="photo.id">
                     <v-card class="px-2 pt-2" @click="showOverlay(index)">
                         <v-img
-                                :src="photo.path"
+                                :src="$host + photo.path"
                         >
                         </v-img>
 
