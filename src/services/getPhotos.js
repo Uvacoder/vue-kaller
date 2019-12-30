@@ -1,9 +1,9 @@
 import hostMixin from './hostMixin'
 
-const getPhotos = async function (data, host) {
+const getPhotos = async function (data, api) {
     console.log('api connecting');
     return new Promise(async (resolve, reject) => {
-        const response = await fetch(hostMixin.host + "/api/photos", {
+        const response = await fetch(hostMixin.host + "/api/"+api, {
             method: "POST",
             mode: "cors",
             headers: {
@@ -22,7 +22,7 @@ const getPhotos = async function (data, host) {
 };
 
 export default {
-    loadPhotos(data, host) {
-        return getPhotos(data, host);
+    loadPhotos(data,api) {
+        return getPhotos(data,api);
     }
 }

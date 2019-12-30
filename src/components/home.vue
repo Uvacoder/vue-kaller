@@ -17,17 +17,22 @@
 </template>
 
 <script>
+    import api from "../services/getPhotos.js";
+
     export default {
         name: "home",
         data () {
             return {
-                photos: [
-                    'https://kallers.se/images/_MK27964-Pano.jpg',
-                    'https://kallers.se/images/_MK29338-Pano.jpg',
-                    'https://kallers.se/images/_MK28956-Pano-2.jpg',
-                    'https://kallers.se/images/_MK27551-Pano.jpg',
-                ]
+                photos: []
             }
+        },
+        methods: {
+            async requestPhotos() {
+                this.photos = await api.loadPhotos({limit: ""},'homepagephotos');
+            },
+        },
+        created() {
+            this.requestPhotos();
         },
     }
 </script>

@@ -51,9 +51,12 @@
                 }
             };
         },
+        props: {
+            images: []
+        },
         methods: {
             async requestPhotos() {
-                this.photos = await api.loadPhotos({limit: ""});
+                this.photos = await api.loadPhotos({limit: ""},'photos');
             },
             showOverlay(index, active = true) {
                 if (active) {

@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import photo from '../components/photo.vue'
 import homepage from '../components/home.vue'
+import api from '../services/getPhotos'
+
+let photos = [];
 
 Vue.use(VueRouter);
 
@@ -23,14 +26,15 @@ const routes = [
     }
   },
   {
-    path: '/photography/:id',
-    name: 'Photography',
-    component: photo
-  },
-  {
     path: '/photography*',
     name: 'Photography',
-    component: photo
+    component: photo,
+    beforeEnter (to, from, next) {
+        next  (vm => {
+          vm.requestPhotos();
+          console.log('photos loaded');
+      });
+    },
   },
   {
     path: '/',
