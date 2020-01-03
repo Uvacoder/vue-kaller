@@ -2,42 +2,41 @@
     <div class="body">
         <v-overlay :value="overlay" opacity="0.9">
             <overlay
-                    :photo="photo"
                     :overlay-prop="overlayProp"
                     :window-size="windowSize"
-                    @close="test"
+                    @close="closeOverlay"
                     @next="nextOverlay"
                     @prev="prevOverlay"
             ></overlay>
         </v-overlay>
-
         <v-container>
-                <v-row no-gutters>
+            <v-fade-transition>
+                <v-row no-gutters v-show="show">
                     <v-col
                             v-for="(photo, index) in photos"
-                            :class="'col-lg-'+photo.col+' col-md-'+photo.col*2+' col-sm-12 phototest'"
+                            :class="'col-xl-'+photo.col+' col-md-'+photo.col*2+' col-sm-12 phototest '"
+                            :id="photo.filename"
                             v-bind:key="photo.id"
                     >
 
                         <photoCard :photo="photo" :click="showOverlay" :index="index"></photoCard>
                     </v-col>
                 </v-row>
-
+            </v-fade-transition>
         </v-container>
     </div>
 </template>
 
 <script>
-    import api from "../services/getPhotos.js";
     import Overlay from "./PhotoOverlay";
     import photoCard from "./photoCard";
+    import  {mapState} from 'vuex'
 
     export default {
         name: "style",
         data() {
             return {
-                photos: [],
-                photo: null,
+                show: false,
                 overlay: false,
                 overlayProp: {
                     path: "path",
@@ -45,42 +44,43 @@
                     height: "",
                     index: 0
                 },
-                windowSize: {
-                    x: 0,
-                    y: 0
-                }
             };
         },
+        computed: {
+            ...mapState([
+                'photos',
+                'windowSize'
+            ])
+        },
         props: {
-            images: []
+            photo: String,
         },
         methods: {
-            async requestPhotos() {
-                this.photos = await api.loadPhotos({limit: ""},'photos');
-            },
-            showOverlay(index, active = true) {
+            showOverlay(index, active = true, router=true) {
                 if (active) {
-                    this.photo = this.photos[index];
+                    this.overlayProp.photo = this.photos[index];
                     this.overlayProp.index = index;
                     this.overlayProp.path = this.photos[index].path;
                     this.overlayProp.height = this.photos[index].height;
                     let width = this.photos[index].width / (this.photos[index].height / (this.windowSize.y * 0.9));
                     if (width > this.windowSize.x * 0.9) {
                         console.log("mode 1");
-                        this.overlayProp.height = "auto";
+                        this.overlayProp.height = 'auto';
                         this.overlayProp.width = this.windowSize.x * 0.9;
                     } else {
-                        console.log("mode 1");
+                        console.log("mode 2");
                         this.overlayProp.width = width;
+                        this.overlayProp.height = this.windowSize.y * 0.9;
                     }
                     this.overlay = true;
-                    this.$router.push("/photography/" + this.photos[index].filename);
+                    if(router) this.$router.push("/photography/" + this.photos[index].filename);
                 }
             },
             onResize() {
-                this.windowSize = {x: window.innerWidth, y: window.innerHeight};
+                if(this.overlay) this.showOverlay(this.overlayProp.index);
+                this.$store.dispatch('getWindowSize');
             },
-            test(value) {
+            closeOverlay(value) {
                 this.overlay = value;
                 this.$router.push("/photography");
             },
@@ -91,14 +91,36 @@
             prevOverlay() {
                 let index = this.overlayProp.index;
                 this.showOverlay(index - 1);
+            },
+            photoSelected(){
+                const photos = this.photos;
+                if(this.photo){
+                    for (let i = 0; i < photos.length; i++) {
+                        if(photos[i].filename===this.photo){
+                            console.log('true');
+                            this.showOverlay(i,true,false);
+                            continue;
+                        }
+                    }
+                }
             }
         },
         created() {
-            this.requestPhotos();
             console.log(this.$vuetify.breakpoint.sm);
+            setTimeout(() => this.show=true, 1);
+            window.addEventListener('resize', this.onResize);
         },
         mounted() {
             this.onResize();
+            this.show = true;
+        },
+        watch: {
+          photos: {
+              handler: function (val, oldVal) {
+                  console.log('photos changed');
+                 this.photoSelected();
+              }
+          }
         },
         components: {
             Overlay,
@@ -117,6 +139,7 @@
 
     .body {
         background-color: #383838;
+        min-height: 200vh;
     }
 
     .mobilePhoto {

@@ -881,6 +881,11 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
+"@mdi/font@^4.7.95":
+  version "4.7.95"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-4.7.95.tgz#46fddf35aad64dd623a8b1837f78ca4ed7bc48b1"
+  integrity sha512-/SWooHIFz2dXkQJk3VhEXSbBplOU1lIkGSELAmw0peFEgR8KPqyM//M3vD8WDZETuEOSRVhVqLevP3okrsM5dw==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -11095,6 +11100,11 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
+vuebar@0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/vuebar/-/vuebar-0.0.20.tgz#fd6313c2d3a2202c49e42419fe1d9ef126134200"
+  integrity sha512-Pq72X10Yl5QyQPcX4hR8KdhA2o+qpqzOdwkoIHUnAJfXWLODBKJhUPAnWvKvBcgst0HuHASLDrcFBSQz98gd9g==
+
 vuetify-loader@^1.3.0:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/vuetify-loader/-/vuetify-loader-1.4.3.tgz#df1323c558be09890877e5fbe817b3a71a6c538d"
@@ -11687,6 +11697,11 @@ yarn@^1.15.0:
   version "1.21.0"
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.21.0.tgz#e0827d97a24f6714f1540cf2e8328b2e8eed682c"
   integrity sha512-g9cvrdKXPZlz1eJYpKanQm3eywEmecudeyDkwiVWeswBrpHK3nJFBholkphHF9eNc8y/FNEhSQ8Et5ZAx4XyLw==
+
+yarn@^1.21.1:
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.21.1.tgz#1d5da01a9a03492dc4a5957befc1fd12da83d89c"
+  integrity sha512-dQgmJv676X/NQczpbiDtc2hsE/pppGDJAzwlRiADMTvFzYbdxPj2WO4PcNyriSt2c4jsCMpt8UFRKHUozt21GQ==
 
 yauzl@^2.4.2:
   version "2.10.0"

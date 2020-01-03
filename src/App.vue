@@ -10,6 +10,7 @@
                 <v-btn to="/photography" text>Photography</v-btn>
                 <v-btn to="/locations" text>Locations</v-btn>
                 <v-btn to="/contact" text>Contact</v-btn>
+                <v-btn to="/admin" text>Dashboard</v-btn>
             </v-toolbar-items>
         </v-app-bar>
 
@@ -30,9 +31,9 @@
                     dense
             >
                 <v-list-item-group>
-<!--                    <v-list-item>-->
-<!--                        <v-toolbar-title>Kaller Creations</v-toolbar-title>-->
-<!--                    </v-list-item>-->
+                    <!--                    <v-list-item>-->
+                    <!--                        <v-toolbar-title>Kaller Creations</v-toolbar-title>-->
+                    <!--                    </v-list-item>-->
 
                     <v-list-item to="/">
                         <v-list-item-title>Portfolio</v-list-item-title>
@@ -82,21 +83,23 @@
         position: fixed !important;
     }
 
-    .v-list-item-title{
+    .v-list-item-title {
         color: red !important;
     }
 
     body::-webkit-scrollbar {
         width: 3px;
     }
+
     body::-webkit-scrollbar * {
         background: transparent;
     }
+
     body::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.8) !important;
     }
 
-    body{
+    body {
         background-color: #383838;
     }
 </style>

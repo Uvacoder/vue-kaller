@@ -8,7 +8,7 @@
             >
                 <div class="header">
                     <v-spacer></v-spacer>
-                    <div class="display-3">Kaller's Lanscape Photography</div>
+                    <div class="display-3">Kaller's Landscape Photography</div>
                     <v-spacer></v-spacer>
                 </div>
             </v-carousel-item>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import api from "../services/getPhotos.js";
+    import api from "../services/api.js";
 
     export default {
         name: "home",
@@ -28,7 +28,7 @@
         },
         methods: {
             async requestPhotos() {
-                this.photos = await api.loadPhotos({limit: ""},'homepagephotos');
+                this.photos = await api.post({limit: ""},'homepagephotos');
             },
         },
         created() {

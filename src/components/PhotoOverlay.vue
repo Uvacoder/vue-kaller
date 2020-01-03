@@ -4,8 +4,8 @@
       <v-icon style="font-size: 70px;">mdi-chevron-left</v-icon>
     </div>
     <div @click="hideOverlay()" class="exit"></div>
-    <div class="d-inline box" :style="'width: '+this.overlayProp.width+8+'px'">
-      <v-img :lazy-src="$host + photo.prepath" :src="$host + photo.highpath" :height="windowSize.y*0.9" @click="hideOverlay()" :key="photo.id">
+    <div class="d-inline box" :style="'width: '+this.overlayProp.width+'px'">
+      <v-img :lazy-src="$host + overlayProp.photo.prepath" :src="$host + overlayProp.photo.highpath" :height="overlayProp.height" :width="overlayProp.width" @click="hideOverlay()" :key="overlayProp.photo.id">
         <template v-slot:placeholder>
           <v-row
                   class="fill-height ma-0"
@@ -28,7 +28,6 @@
 export default {
   name: "PhotoOverlay.vue",
   props: {
-    photo: Object,
     windowSize: Object,
     overlayProp: Object
   },
