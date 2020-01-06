@@ -14,7 +14,7 @@
                 <v-row no-gutters v-show="show">
                     <v-col
                             v-for="(photo, index) in photos"
-                            :class="'col-xl-'+photo.col+' col-md-'+photo.col*2+' col-sm-12 phototest '"
+                            :class="'col-xl-'+photo.col+' col-md-4'+' col-sm-12 phototest '"
                             :id="photo.filename"
                             v-bind:key="photo.id"
                     >

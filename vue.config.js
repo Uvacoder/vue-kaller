@@ -7,5 +7,8 @@ module.exports = {
     workboxOptions: {
       navigateFallback: '/'
     }
-  }
+  },
+  devServer: {
+    https: true,
+  },
 };

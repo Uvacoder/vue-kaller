@@ -33,21 +33,56 @@
                 </v-row>
             </template>
         </v-img>
-        <v-card-subtitle class="pb-0">{{photo.lens}}</v-card-subtitle>
-        <v-card-text class="text--primary">
-            <div>{{photo.aperture}} and {{photo.shutterspeed}}s</div>
-            <div>{{photo.date_string}}</div>
-        </v-card-text>
+
+        <v-row>
+            <v-col cols="7" md="12" class="pt-0">
+                <v-card-subtitle class="pb-0">{{photo.lens}}</v-card-subtitle>
+                <v-card-text class="text--primary pa-0 pl-4">
+                    <div>{{photo.aperture}} and {{photo.shutterspeed}}s</div>
+                    <div>{{photo.date_string}}</div>
+                </v-card-text>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col cols="5" md="0" class=" d-flex justify-center align-center" v-if="$vuetify.breakpoint.smAndDown">
+                <navigator-share
+                        v-bind:on-error="onError"
+                        v-bind:on-success="onSuccess"
+                        :url="'https://kallers.se/photography/' + photo.filename"
+                        title="Kaller Creations"
+                        text=""
+                >
+                <v-btn color="primary">
+                    Share
+                    <v-icon size="20">mdi-share-variant</v-icon>
+                </v-btn>
+                </navigator-share>
+            </v-col>
+        </v-row>
     </v-card>
 </template>
 
 <script>
+    import NavigatorShare from 'vue-navigator-share'
+
     export default {
         name: "photoCard",
         props: {
             photo: Object,
             click: Function,
             index: Number
+        },
+        components: {
+            NavigatorShare
+        },
+        methods: {
+            onError(){
+                alert("Please open this website in another browser, Chrome or Safari is recommended. This feature only works on mobile");
+            }
+        },
+        computed: {
+            url() {
+                return window.location.href;
+            }
         }
     }
 </script>

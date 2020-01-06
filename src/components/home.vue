@@ -18,35 +18,54 @@
 
 <script>
     import api from "../services/api.js";
+    import NavigatorShare from 'vue-navigator-share'
 
     export default {
         name: "home",
-        data () {
+        data() {
             return {
                 photos: []
             }
         },
         methods: {
             async requestPhotos() {
-                this.photos = await api.post({limit: ""},'homepagephotos');
+                this.photos = await api.post({limit: ""}, 'homepagephotos');
             },
+            onError(err) {
+                alert(err);
+                console.log(err);
+            },
+            onSuccess(err) {
+                console.log(err);
+            }
         },
         created() {
             this.requestPhotos();
         },
+        components: {
+            NavigatorShare
+        },
+        computed: {
+            url() {
+                return window.location.href;
+            },
+            title() {
+                return document.title;
+            }
+        }
     }
 </script>
 
 <style scoped>
-.header{
-    color: white;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .header {
+        color: white;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    .wrapper{
+    .wrapper {
         background-color: #383838;
         height: 90vh;
     }

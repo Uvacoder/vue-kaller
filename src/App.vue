@@ -17,7 +17,16 @@
         <v-app-bar dark fixed :hide-on-scroll="false" class="hidden-lg-and-up">
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-spacer></v-spacer>
-            <v-toolbar-title>Kaller Creations</v-toolbar-title>
+            <v-toolbar-title class="pr-2">Kaller Creations</v-toolbar-title>
+            <navigator-share
+                    v-bind:on-error="onError"
+                    v-bind:on-success="onSuccess"
+                    :url="url"
+                    title="Kaller Creations"
+                    text=""
+            >
+                    <v-icon>mdi-share-variant</v-icon>
+            </navigator-share>
         </v-app-bar>
         <v-navigation-drawer
                 v-model="drawer"
@@ -31,9 +40,6 @@
                     dense
             >
                 <v-list-item-group>
-                    <!--                    <v-list-item>-->
-                    <!--                        <v-toolbar-title>Kaller Creations</v-toolbar-title>-->
-                    <!--                    </v-list-item>-->
 
                     <v-list-item to="/">
                         <v-list-item-title>Portfolio</v-list-item-title>
@@ -61,15 +67,25 @@
 </template>
 
 <script>
-
+    import NavigatorShare from 'vue-navigator-share'
 
     export default {
         name: 'App',
 
-
         data: () => ({
             drawer: false
         }),
+        components: {
+            NavigatorShare
+        },
+        computed: {
+            url() {
+                return window.location.href;
+            },
+            title() {
+                return document.title;
+            }
+        }
     };
 </script>
 
