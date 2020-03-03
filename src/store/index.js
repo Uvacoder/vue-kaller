@@ -27,8 +27,12 @@ export default new Vuex.Store({
   },
   actions: {
     async getPhotos ({commit}){
+      if (localStorage.photos) {
+        commit('SET_PHOTOS', JSON.parse(localStorage.photos));
+      }
       const photos = await api.post(null,'photos');
-      console.log('Photos',photos);
+      console.log('Photos', photos);
+      localStorage.photos = JSON.stringify(photos);
       commit('SET_PHOTOS',photos);
     },
     getWindowSize ({commit}){
