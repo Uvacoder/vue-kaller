@@ -10,6 +10,11 @@
       down: () => hideOverlay()
     }"
   >
+    <v-snackbar v-model="snackbar" top>
+      Link copied to clipboard!
+      <v-btn color="white" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+
     <div
       @click="prevOverlay()"
       class="button d-flex justify-start"
@@ -50,7 +55,10 @@
               <v-icon size="20">mdi-share-variant</v-icon>
             </v-btn>
           </navigator-share>
-          <a download="file" :href="'https://kallers.se/images/2k/' + overlayProp.photo.filename">
+          <a
+            :download="overlayProp.photo.filename"
+            :href="'https://kallers.se/images/2k/' + overlayProp.photo.filename"
+          >
             <v-btn color="primary" class="ml-2">
               <v-icon size="20">mdi-download</v-icon>
             </v-btn>
@@ -81,6 +89,11 @@ export default {
     windowSize: Object,
     overlayProp: Object
   },
+  data() {
+    return {
+      snackbar: false
+    };
+  },
   methods: {
     nextOverlay() {
       console.log("next");
@@ -93,22 +106,12 @@ export default {
     hideOverlay() {
       this.$emit("close", false);
     },
-    doCopy(text) {
-      this.$copyText(text).then(
-        function(e) {
-          alert("Copied");
-          console.log(e);
-        },
-        function(e) {
-          alert("Can not copy");
-          console.log(e);
-        }
-      );
-    },
     onError() {
-      alert(
-        "Please open this website in another browser, Chrome or Safari is recommended. This feature only works on mobile"
-      );
+      this.doCopy("https://kallers.se/photography/" + this.$route.params.photo);
+      this.snackbar = true;
+    },
+    doCopy: function(text) {
+      this.$copyText(text);
     }
   },
   components: {
@@ -161,8 +164,5 @@ export default {
 .exit {
   flex-grow: 3;
   height: 100vh;
-}
-
-.media {
 }
 </style>
