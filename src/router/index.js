@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import photo from "../components/photo.vue";
+import photos from "../components/photography/photos.vue";
 import homepage from "../components/home.vue";
 import Admin from "../components/Admin.vue";
 import login from "../components/login.vue";
@@ -31,17 +31,12 @@ const routes = [
   {
     path: "/photography",
     name: "Photography",
-    component: photo,
+    component: photos,
     children: [
-      {
-        path: "",
-        component: photo,
-        name: "Photography"
-      },
       {
         path: ":photo",
         name: "Photography",
-        component: photo,
+        component: photos,
         props: true
       }
     ]

@@ -1,5 +1,5 @@
 <template>
-  <div class="body">
+  <div class="body pt-9">
     <v-overlay :value="overlay" opacity="0.9">
       <overlay
         :overlay-prop="overlayProp"
@@ -21,8 +21,12 @@
           <!--                    </v-btn>-->
         </v-col>
         <v-col class="pa-0 ma-0 pr-5 d-flex justify-end">
-          <v-btn-toggle v-model="mode">
-            <v-btn v-for="size in columns.allowedSizes" @click="splitPhotosV2(size)">
+          <v-btn-toggle v-model="columns.mode">
+            <v-btn
+              v-for="(size,index) in columns.allowedSizes"
+              @click="splitPhotosV2(size)"
+              v-bind:key="index"
+            >
               <v-icon>{{columns.icons[size]}}</v-icon>
             </v-btn>
           </v-btn-toggle>
@@ -31,10 +35,11 @@
       <v-fade-transition>
         <v-row no-gutters v-show="show" class="pt-0 mt-0">
           <v-col
-            v-for="array in splitPhotos"
-            :class="'col-'+columns.size +' d-flex flex-column'+order.reverse+' justify-'+order.justify"
+            v-for="(array,index) in splitPhotos"
+            v-bind:key="index"
+            :class="'d-flex flex-column'+order.reverse+' justify-'+order.justify"
           >
-            <div v-for="photo in array" class="d-flex pa-2" v-bind:key="photo.id">
+            <div v-for="photo in array" class="d-flex pa-1" v-bind:key="photo.id">
               <photoCard :photo="photo" :click="showOverlay" :text="text"></photoCard>
             </div>
           </v-col>
@@ -62,7 +67,6 @@ export default {
         index: 0
       },
       splitPhotos: {},
-      switch1: true,
       order: {
         reverse: "",
         justify: "start",
@@ -72,25 +76,28 @@ export default {
         amount: 3,
         size: 4,
         allowedSizes: [],
-        mode: "test",
+        mode: 0,
         icons: [
           "none",
           "mdi-numeric-1-box-multiple-outline",
           "mdi-numeric-2-box-multiple-outline",
           "mdi-numeric-3-box-multiple-outline",
           "mdi-numeric-4-box-multiple-outline",
-          "none",
+          "mdi-numeric-5-box-multiple-outline",
           "mdi-numeric-6-box-multiple-outline",
-          "none",
-          "none",
-          "none",
-          "none",
-          "none",
+          "mdi-numeric-7-box-multiple-outline",
+          "mdi-numeric-8-box-multiple-outline",
+          "mdi-numeric-9-box-multiple-outline",
+          "mdi-numeric-9-plus-box-multiple-outline",
+          "mdi-numeric-9-plus-box-multiple-outline",
           "mdi-numeric-9-plus-box-multiple-outline"
         ]
       },
       text: true
     };
+  },
+  props: {
+    photo: Object
   },
   computed: {
     ...mapState(["photos", "windowSize"])
@@ -114,7 +121,8 @@ export default {
           this.overlayProp.height = this.windowSize.y * 0.9;
         }
         this.overlay = true;
-        if (router) this.$router.push("/photography/" + photo.filename);
+        if (this.$route.params.photo !== photo.filename)
+          this.$router.push("/photography/" + photo.filename);
       }
     },
     onResize() {
@@ -123,8 +131,9 @@ export default {
 
       this.showOverlay(this.overlayProp.photo, this.overlay);
 
+      //recalculates the amount of allowedcolumns, uses px because breakpoints werent fast enough
       if (this.windowSize.x > 1904) {
-        this.columns.allowedSizes = [4, 6, 12];
+        this.columns.allowedSizes = [4, 6, 9];
       } else if (this.windowSize.x > 1264) {
         this.columns.allowedSizes = [3, 4, 6];
       } else if (this.windowSize.x > 960) {
@@ -134,6 +143,7 @@ export default {
         this.columns.allowedSizes = [1, 2];
       }
 
+      //changes the current amount of columns so it doesnt overide the max limit
       if (this.columns.amount > this.columns.allowedSizes.slice(-1)[0])
         this.splitPhotosV2(this.columns.allowedSizes.slice(-1)[0]);
       if (this.columns.amount < this.columns.allowedSizes[0])
@@ -155,6 +165,7 @@ export default {
       this.showOverlay(this.photos[index - 1]);
     },
     photoSelected() {
+      //checks if theres an image as param
       const photos = this.photos;
       console.log("ROUTE FOUND", this.$route.params.photo);
       if (this.$route.params.photo) {
@@ -163,23 +174,27 @@ export default {
             this.showOverlay(photo, true, false);
           }
         });
-      }
+      } else this.overlay = false;
     },
+    //Splits the array of photos in cols in the right order
     splitPhotosV2(cols) {
-      console.log("I AM RUNNING", cols);
-
       this.columns.amount = cols;
+      this.columns.mode = this.columns.allowedSizes.indexOf(cols);
+      //Grid size
       this.columns.size = 12 / cols;
+      console.log(this.columns.size);
 
       const photos = this.photos;
       let splitPhotos = [];
       let heights = [];
 
+      //adds one photo in each cols amount of arryas
       for (let i = 0; i < cols; i++) {
         splitPhotos[i] = [photos[i]];
         heights[i] = photos[i].height / photos[i].width;
       }
 
+      //checks which column contains the images with the least amount of height and ads one more imahe to that array
       this.photos.forEach(async (photo, index) => {
         if (index > cols - 1) {
           const temp = Math.min(...heights);
@@ -195,7 +210,7 @@ export default {
       } else this.text = true;
     },
     flipPhotos() {
-      console.log("flip");
+      //flips the order of the columns with flex
       this.order.reverse !== "-reverse"
         ? (this.order.reverse = "-reverse")
         : (this.order.reverse = "");
@@ -206,6 +221,7 @@ export default {
         ? (this.order.icon = "mdi-sort-descending")
         : (this.order.icon = "mdi-sort-ascending");
     },
+    //Adjusts the amount of columns needed depending on screensize.
     initiatePhotos() {
       switch (this.$vuetify.breakpoint.name) {
         case "xl":
@@ -222,22 +238,32 @@ export default {
           this.splitPhotosV2(2);
           break;
       }
+    },
+    shortcuts(e) {
+      let key = parseInt(e.key);
+      if (!isNaN(key)) {
+        if (key === 0) key = 12;
+        this.splitPhotosV2(key);
+        if (!this.columns.allowedSizes.includes(key)) this.text = false;
+      }
     }
   },
   created() {
     console.log(this.$vuetify.breakpoint.sm);
     setTimeout(() => (this.show = true), 1);
     window.addEventListener("resize", this.onResize);
+    window.addEventListener("keydown", e => this.shortcuts(e));
   },
   mounted() {
-    this.onResize();
-    this.initiatePhotos();
+    if (this.photos.length) {
+      this.onResize();
+      this.initiatePhotos();
+    }
     this.show = true;
   },
   watch: {
     photos: {
       handler: function(val, oldVal) {
-        console.log("photos changed");
         this.photoSelected();
         this.onResize();
         this.initiatePhotos();
@@ -247,6 +273,11 @@ export default {
   components: {
     Overlay,
     photoCard
+  },
+  beforeRouteUpdate(to, from, next) {
+    //If browser presses backbutton overlay needs to be changed but since the component is still alive that didnt do it by itself
+    next();
+    this.photoSelected();
   }
 };
 </script>

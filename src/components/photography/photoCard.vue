@@ -118,10 +118,6 @@ export default {
 </script>
 
 <style scoped>
-.desktopPhoto {
-  height: 400px !important;
-}
-
 .photocard {
   width: 100%;
 }

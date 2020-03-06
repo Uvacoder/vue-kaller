@@ -21,7 +21,7 @@
       <navigator-share v-bind:on-error="onError" :url="url" title="Kaller Creations" text>
         <v-icon>mdi-share-variant</v-icon>
       </navigator-share>
-    </v-app-bar>
+    </v-app-bar>1
     <v-navigation-drawer v-model="drawer" absolute temporary dark class="navDrawer">
       <v-list nav dense>
         <v-list-item-group>
@@ -43,7 +43,7 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
-    <div class="navspacer"></div>
+    <!-- <div class="navspacer"></div> -->
     <keep-alive>
       <router-view />
     </keep-alive>
@@ -68,6 +68,11 @@ export default {
     },
     title() {
       return document.title;
+    }
+  },
+  methods: {
+    onError() {
+      console.log("Navigatorshare not supported");
     }
   }
 };

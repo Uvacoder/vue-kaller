@@ -1,34 +1,28 @@
 <template>
   <div
-    class="overlayPhoto"
-    @keyup.right="nextOverlay()"
-    @keyup.left="prevOverlay()"
+    class="overlayPhoto d-flex"
     v-touch="{
       left: () => nextOverlay(),
       right: () => prevOverlay(),
       up: () => hideOverlay(),
       down: () => hideOverlay()
     }"
+    @click.self="hideOverlay()"
   >
     <v-snackbar v-model="snackbar" top>
       Link copied to clipboard!
       <v-btn color="white" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
-    <div
-      @click="prevOverlay()"
-      class="button d-flex justify-start"
-      v-if="!$vuetify.breakpoint.smAndDown"
-    >
-      <v-btn fab large color="secondary">
-        <v-icon style="font-size: 70px;">mdi-chevron-left</v-icon>
+    <div @click="prevOverlay()" class="pa-2" v-if="!$vuetify.breakpoint.smAndDown">
+      <v-btn fab large outlined>
+        <v-icon style="font-size: 60px;">mdi-chevron-left</v-icon>
       </v-btn>
     </div>
-    <div @click="hideOverlay()" class="exit" v-if="!$vuetify.breakpoint.smAndDown"></div>
     <div class="d-inline" :style="'width: '+this.overlayProp.width+'px'">
-      <div @click="hideOverlay()" class="exit" v-if="!$vuetify.breakpoint.smAndDown"></div>
       <div class="box">
         <v-img
+          :aspect-ratio="overlayProp.width/overlayProp.height"
           :lazy-src="$host + overlayProp.photo.prepath"
           :src="$host + overlayProp.photo.highpath"
           :height="overlayProp.height"
@@ -65,16 +59,10 @@
           </a>
         </div>
       </div>
-      <div @click="hideOverlay()" class="exit" v-if="!$vuetify.breakpoint.smAndDown"></div>
     </div>
-    <div @click="hideOverlay()" class="exit" v-if="!$vuetify.breakpoint.smAndDown"></div>
-    <div
-      v-if="!$vuetify.breakpoint.smAndDown"
-      @click="nextOverlay()"
-      class="button d-flex justify-end"
-    >
-      <v-btn fab large color="secondary">
-        <v-icon style="font-size: 70px;">mdi-chevron-right</v-icon>
+    <div v-if="!$vuetify.breakpoint.smAndDown" class="button d-flex justify-end pa-2">
+      <v-btn fab large outlined @click="nextOverlay()">
+        <v-icon style="font-size: 60px;">mdi-chevron-right</v-icon>
       </v-btn>
     </div>
   </div>
@@ -142,16 +130,9 @@ export default {
 
 <style scoped>
 .overlayPhoto {
-  height: 95vh;
-  width: 99vw;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.overlayPhoto .button {
-  flex-grow: 1;
-  height: 600px;
+  height: 100vh;
+  width: 100vw;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -159,10 +140,5 @@ export default {
   background-color: white;
   padding: 4px;
   touch-action: pinch-zoom;
-}
-
-.exit {
-  flex-grow: 3;
-  height: 100vh;
 }
 </style>
