@@ -1,6 +1,6 @@
 <template>
   <v-card
-    :class="{'mobilePhoto': $vuetify.breakpoint.smAndDown, 'pa-1 photocard': true, 'disabled': true}"
+    :class="{'mobilePhoto': $vuetify.breakpoint.smAndDown, 'pa-1 photocard ': true, 'disabled': true}"
     :ripple="!$vuetify.breakpoint.smAndDown"
   >
     <v-img
@@ -12,6 +12,9 @@
       :aspect-ratio="photo.width/photo.height"
       :alt="`Photograph ${photo.filename} was taken ${new Date(photo.date*1000).toLocaleDateString()} with ${photo.aperture} and ${photo.shutterspeed}s`"
     >
+      <v-overlay absolute :value="hover">
+        <v-icon @click="click(photo)" x-large>mdi-image-area</v-icon>
+      </v-overlay>
       <template v-slot:placeholder>
         <v-row class="fill-height ma-0" align="center" justify="center">
           <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
@@ -79,7 +82,8 @@ export default {
     click: Function,
     index: Number,
     large: Boolean,
-    text: Boolean
+    text: Boolean,
+    hover: Boolean
   },
   components: {
     NavigatorShare

@@ -7,6 +7,7 @@
         @close="closeOverlay"
         @next="nextOverlay"
         @prev="prevOverlay"
+        @fullscreen="toggleFullscreen"
       ></overlay>
     </v-overlay>
     <v-container>
@@ -40,7 +41,15 @@
             :class="'d-flex flex-column'+order.reverse+' justify-'+order.justify"
           >
             <div v-for="photo in array" class="d-flex pa-1" v-bind:key="photo.id">
-              <photoCard :photo="photo" :click="showOverlay" :text="text"></photoCard>
+              <v-hover v-slot:default="{ hover }">
+                <photoCard
+                  :class="`elevation-${hover ? 24 : 0}`"
+                  :photo="photo"
+                  :click="showOverlay"
+                  :text="text"
+                  :hover="hover"
+                ></photoCard>
+              </v-hover>
             </div>
           </v-col>
         </v-row>
@@ -58,13 +67,15 @@ export default {
   name: "style",
   data() {
     return {
+      hover: false,
       show: false,
       overlay: false,
       overlayProp: {
         path: "path",
         width: "",
         height: "",
-        index: 0
+        index: 0,
+        fullscreen: false
       },
       splitPhotos: {},
       order: {
@@ -103,7 +114,7 @@ export default {
     ...mapState(["photos", "windowSize"])
   },
   methods: {
-    showOverlay(photo, active = true, router = true) {
+    showOverlay(photo = this.overlayProp.photo, active = true, router = true) {
       if (active) {
         let index = this.photos.indexOf(photo);
         this.overlayProp.photo = photo;
@@ -113,9 +124,15 @@ export default {
         let width = photo.width / (photo.height / (this.windowSize.y * 0.9));
         if (width > this.windowSize.x * 0.9) {
           this.overlayProp.height = "auto";
-          if (this.windowSize.x < 960)
+          if (
+            this.overlayProp.fullscreen &&
+            !this.$vuetify.breakpoint.smAndDown
+          ) {
+            this.overlayProp.width = this.windowSize.x * 0.98;
+          } else if (this.windowSize.x < 960) {
+            this.overlayProp.fullscreen = true;
             this.overlayProp.width = this.windowSize.x * 0.95;
-          else this.overlayProp.width = this.windowSize.x * 0.8;
+          } else this.overlayProp.width = this.windowSize.x * 0.8;
         } else {
           this.overlayProp.width = width;
           this.overlayProp.height = this.windowSize.y * 0.9;
@@ -123,6 +140,8 @@ export default {
         this.overlay = true;
         if (this.$route.params.photo !== photo.filename)
           this.$router.push("/photography/" + photo.filename);
+        if (this.$vuetify.breakpoint.smAndDown)
+          this.overlayProp.fullscreen = true;
       }
     },
     onResize() {
@@ -158,11 +177,15 @@ export default {
     },
     nextOverlay() {
       let index = this.overlayProp.index;
-      this.showOverlay(this.photos[index + 1]);
+      this.$router.push("/photography/" + this.photos[index + 1].filename);
     },
     prevOverlay() {
       let index = this.overlayProp.index;
-      this.showOverlay(this.photos[index - 1]);
+      this.$router.push("/photography/" + this.photos[index - 1].filename);
+    },
+    toggleFullscreen(value, reset = false) {
+      this.overlayProp.fullscreen = value;
+      if (!reset) this.showOverlay();
     },
     photoSelected() {
       //checks if theres an image as param
@@ -246,6 +269,9 @@ export default {
         this.splitPhotosV2(key);
         if (!this.columns.allowedSizes.includes(key)) this.text = false;
       }
+    },
+    test(photo) {
+      this.hover = true;
     }
   },
   created() {
@@ -286,5 +312,8 @@ export default {
 .body {
   background-color: #383838;
   min-height: 100vh;
+}
+.on-hover {
+  opacity: 0.9;
 }
 </style>

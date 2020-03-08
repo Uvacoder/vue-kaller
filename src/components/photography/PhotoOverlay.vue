@@ -14,15 +14,14 @@
       <v-btn color="white" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
 
-    <div @click="prevOverlay()" class="pa-2" v-if="!$vuetify.breakpoint.smAndDown">
-      <v-btn fab large outlined>
+    <div @click="prevOverlay()">
+      <v-btn fab large outlined v-if="!overlayProp.fullscreen" class="ma-2">
         <v-icon style="font-size: 60px;">mdi-chevron-left</v-icon>
       </v-btn>
     </div>
     <div class="d-inline" :style="'width: '+this.overlayProp.width+'px'">
       <div class="box">
         <v-img
-          :aspect-ratio="overlayProp.width/overlayProp.height"
           :lazy-src="$host + overlayProp.photo.prepath"
           :src="$host + overlayProp.photo.highpath"
           :height="overlayProp.height"
@@ -57,11 +56,19 @@
               <v-icon size="20">mdi-download</v-icon>
             </v-btn>
           </a>
+          <v-btn
+            color="primary"
+            class="ml-2"
+            @click="wideOverlay()"
+            v-if="!$vuetify.breakpoint.smAndDown"
+          >
+            <v-icon size="20">{{fullscreenIcon}}</v-icon>
+          </v-btn>
         </div>
       </div>
     </div>
-    <div v-if="!$vuetify.breakpoint.smAndDown" class="button d-flex justify-end pa-2">
-      <v-btn fab large outlined @click="nextOverlay()">
+    <div>
+      <v-btn fab large outlined @click="nextOverlay()" v-if="!overlayProp.fullscreen" class="ma-2">
         <v-icon style="font-size: 60px;">mdi-chevron-right</v-icon>
       </v-btn>
     </div>
@@ -79,7 +86,8 @@ export default {
   },
   data() {
     return {
-      snackbar: false
+      snackbar: false,
+      fullscreenIcon: "mdi-fullscreen"
     };
   },
   methods: {
@@ -93,6 +101,18 @@ export default {
     },
     hideOverlay() {
       this.$emit("close", false);
+      document.exitFullscreen();
+    },
+    wideOverlay() {
+      if (this.fullscreenIcon !== "mdi-fullscreen") {
+        this.fullscreenIcon = "mdi-fullscreen";
+        document.exitFullscreen();
+        this.$emit("fullscreen", false);
+      } else {
+        this.fullscreenIcon = "mdi-fullscreen-exit";
+        document.documentElement.requestFullscreen();
+        this.$emit("fullscreen", true);
+      }
     },
     onError() {
       this.doCopy("https://kallers.se/photography/" + this.$route.params.photo);
@@ -119,11 +139,16 @@ export default {
           break;
       }
     });
+    if (!this.$vuetify.breakpoint.smAndDown)
+      this.overlayProp.fullscreen = false;
   },
   computed: {
     url() {
       return window.location.href;
     }
+  },
+  beforeDestroy() {
+    this.$emit("fullscreen", false, true);
   }
 };
 </script>
