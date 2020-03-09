@@ -44,9 +44,11 @@
       </v-list>
     </v-navigation-drawer>
     <!-- <div class="navspacer"></div> -->
-    <keep-alive>
-      <router-view />
-    </keep-alive>
+    <transition name="fade" mode="out-in">
+      <keep-alive>
+        <router-view />
+      </keep-alive>
+    </transition>
   </v-app>
 </template>
 
@@ -57,7 +59,8 @@ export default {
   name: "App",
 
   data: () => ({
-    drawer: false
+    drawer: false,
+    start: false
   }),
   components: {
     NavigatorShare
@@ -74,6 +77,9 @@ export default {
     onError() {
       console.log("Navigatorshare not supported");
     }
+  },
+  mounted() {
+    this.start = true;
   }
 };
 </script>
@@ -106,5 +112,16 @@ body::-webkit-scrollbar-thumb {
 
 body {
   background-color: #383838;
+}
+#app {
+  background-color: #383838;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>

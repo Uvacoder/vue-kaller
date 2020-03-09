@@ -6,6 +6,8 @@ import homepage from "../components/home.vue";
 import Admin from "../components/Admin.vue";
 import login from "../components/login.vue";
 import isAuth from "../services/authenticate";
+import locations from "../components/locations/locations.vue";
+
 
 Vue.use(VueRouter);
 
@@ -50,6 +52,11 @@ const routes = [
     path: "/login",
     name: "Kaller",
     component: login
+  },
+  {
+    path: "/locations",
+    name: "Locations",
+    component: locations
   }
 ];
 
