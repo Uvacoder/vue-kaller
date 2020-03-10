@@ -2,18 +2,28 @@
   <div class="wrapper">
     <v-container>
       <v-row>
+        <v-col>
+          <v-btn @click="flipPhotos()" height="48px" class="mr-2 pa-0">
+            <v-icon class="pa-0">{{order.icon}}</v-icon>
+          </v-btn>
+        </v-col>
         <v-col height="48px" class="pa-3 ma-0 rounded test" :cols="12" :md="6" :lg="4">
           <div>
             <v-autocomplete
               :items="locationNames"
               @change="locationSearched"
               v-model="selectedLocation"
+              label="Search location..."
+              dense
+              hide-details
               solo
+              autocomplete="off"
+              height="48px"
             ></v-autocomplete>
           </div>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row :class="'justify-end'">
         <v-col
           :cols="12"
           :md="6"
@@ -102,7 +112,12 @@ export default {
         }
       ],
       locationNames: [],
-      selectedLocation: ""
+      selectedLocation: "",
+      order: {
+        reverse: "",
+        justify: "start",
+        icon: "mdi-sort-descending"
+      }
     };
   },
   methods: {
@@ -116,6 +131,18 @@ export default {
       if (this.selectedLocation) {
         this.$router.push("/locations/" + this.selectedLocation);
       }
+    },
+    flipPhotos() {
+      //flips the order of the columns with flex
+      this.order.reverse !== "-reverse"
+        ? (this.order.reverse = "-reverse")
+        : (this.order.reverse = "");
+      this.order.justify !== "start"
+        ? (this.order.justify = "start")
+        : (this.order.justify = "end");
+      this.order.icon !== "mdi-sort-descending"
+        ? (this.order.icon = "mdi-sort-descending")
+        : (this.order.icon = "mdi-sort-ascending");
     }
   },
   mounted() {
