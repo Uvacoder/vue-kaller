@@ -64,7 +64,7 @@ import photoCard from "./photoCard";
 import { mapState } from "vuex";
 
 export default {
-  name: "style",
+  name: "Photos",
   data() {
     return {
       hover: false,

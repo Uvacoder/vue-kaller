@@ -7,6 +7,7 @@ import Admin from "../components/Admin.vue";
 import login from "../components/login.vue";
 import isAuth from "../services/authenticate";
 import locations from "../components/locations/locations.vue";
+import location from "../components/locations/location.vue";
 
 
 Vue.use(VueRouter);
@@ -54,10 +55,15 @@ const routes = [
     component: login
   },
   {
+    path: "/locations/:location",
+    name: "Location",
+    component: location,
+  },
+  {
     path: "/locations",
     name: "Locations",
-    component: locations
-  }
+    component: locations,
+  },
 ];
 
 const router = new VueRouter({
