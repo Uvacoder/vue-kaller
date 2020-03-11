@@ -6,14 +6,14 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import hostMixin from './services/hostMixin'
 import VueClipboard from 'vue-clipboard2'
- 
+
 Vue.use(VueClipboard)
 
 Vue.config.productionTip = false
 
 Vue.prototype.$host = hostMixin.host;
 
-if(!localStorage.auth) localStorage.auth = 'none';
+if (!localStorage.auth) localStorage.auth = 'none';
 
 new Vue({
   router,
@@ -24,3 +24,4 @@ new Vue({
 
 store.dispatch('getPhotos');
 store.dispatch('getWindowSize');
+store.dispatch('getLocations');

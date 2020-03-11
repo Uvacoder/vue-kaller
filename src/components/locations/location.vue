@@ -5,8 +5,13 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Location",
+  computed: {
+    ...mapState(["locations", "windowSize"])
+  },
   created() {
     console.log("HELLO?????", this.$route.params.location);
   }
