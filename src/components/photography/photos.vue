@@ -1,5 +1,5 @@
 <template>
-  <div class="body pt-9">
+  <div class="mt-10">
     <v-overlay :value="overlay" opacity="0.9">
       <overlay
         :overlay-prop="overlayProp"
@@ -62,6 +62,7 @@
 import Overlay from "./PhotoOverlay";
 import photoCard from "./photoCard";
 import { mapState } from "vuex";
+import "../../services/findKey.js";
 
 export default {
   name: "Photos",
@@ -187,16 +188,14 @@ export default {
       this.overlayProp.fullscreen = value;
       if (!reset) this.showOverlay();
     },
+    //checks if theres an image as param
     photoSelected() {
-      //checks if theres an image as param
-      const photos = this.photos;
-      console.log("ROUTE FOUND", this.$route.params.photo);
       if (this.$route.params.photo) {
-        photos.forEach(photo => {
-          if (photo.filename === this.$route.params.photo) {
+        this.photos
+          .findKey(this.$route.params.photo, "filename")
+          .then(photo => {
             this.showOverlay(photo, true, false);
-          }
-        });
+          });
       } else this.overlay = false;
     },
     //Splits the array of photos in cols in the right order
@@ -309,11 +308,4 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background-color: #383838;
-  min-height: 100vh;
-}
-.on-hover {
-  opacity: 0.9;
-}
 </style>

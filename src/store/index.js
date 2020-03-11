@@ -69,7 +69,7 @@ export default new Vuex.Store({
         {
           photo: "https://kallers.se/images/low/_MK27876-Redigera.jpg",
           coords: `58°09'47.4"N 15°40'10.8"E`,
-          name: "Haverdal"
+          name: "Tylösand"
         },
         {
           photo: "https://kallers.se/images/low/_MK20389-Redigera.jpg",
@@ -90,6 +90,21 @@ export default new Vuex.Store({
           photo: "https://kallers.se/images/low/_MK27675-Redigera.jpg",
           coords: `58°09'47.4"N 15°40'10.8"E`,
           name: "Hovshallar"
+        },
+        {
+          photo: "https://kallers.se/images/low/_MK27468.jpg",
+          coords: `58°09'47.4"N 15°40'10.8"E`,
+          name: "Städjan"
+        },
+        {
+          photo: "https://kallers.se/images/low/_MK27217.jpg",
+          coords: `58°09'47.4"N 15°40'10.8"E`,
+          name: "Fulufjället"
+        },
+        {
+          photo: "https://kallers.se/images/low/DJI_0336.jpg",
+          coords: `58°09'47.4"N 15°40'10.8"E`,
+          name: "Viggeby"
         }
       ];
       console.log('locations set')

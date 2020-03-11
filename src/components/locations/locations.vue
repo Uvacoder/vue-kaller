@@ -1,13 +1,14 @@
 <template>
-  <div class="wrapper">
+  <div class="mt-7">
     <v-container>
       <v-row>
-        <v-col>
+        <v-col :cols="3">
           <v-btn @click="flipLocations()" height="48px" class="mr-2 pa-0">
             <v-icon class="pa-0">{{order.icon}}</v-icon>
           </v-btn>
         </v-col>
-        <v-col height="48px" class="pa-3 ma-0 rounded test" :cols="12" :md="6" :lg="4">
+        <v-spacer></v-spacer>
+        <v-col height="48px" class="pa-3 ma-0 rounded test" :cols="9" :md="6" :lg="4">
           <div>
             <v-autocomplete
               :items="locationNames"
