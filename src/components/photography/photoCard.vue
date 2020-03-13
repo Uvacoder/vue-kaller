@@ -1,12 +1,12 @@
 <template>
   <v-card
-    :class="{'mobilePhoto': $vuetify.breakpoint.smAndDown, 'pa-1 photocard ': true, 'disabled': true}"
+    :class="{'pa-1 photocard ': true, 'disabled': true}"
     :ripple="!$vuetify.breakpoint.smAndDown"
+    tile
   >
     <v-img
       v-show="!$vuetify.breakpoint.smAndDown"
       :src="$host + photo.path"
-      :class="{'desktopPhoto': large}"
       :lazy-src="$host + photo.prepath"
       @click="click(photo)"
       :aspect-ratio="photo.width/photo.height"

@@ -38,32 +38,49 @@
       <div class="d-flex justify-space-around align-center media pa-2">
         <h3>{{new Date(overlayProp.photo.date*1000).toLocaleDateString()}}</h3>
         <div class="d-flex justify-center align-center">
-          <navigator-share
-            v-bind:on-error="onError"
-            :url="'https://kallers.se/photography/' + overlayProp.photo.filename"
-            title="Kaller Creations"
-            text
-          >
-            <v-btn color="primary">
-              <v-icon size="20">mdi-share-variant</v-icon>
-            </v-btn>
-          </navigator-share>
-          <a
-            :download="overlayProp.photo.filename"
-            :href="'https://kallers.se/images/2k/' + overlayProp.photo.filename"
-          >
-            <v-btn color="primary" class="ml-2">
-              <v-icon size="20">mdi-download</v-icon>
-            </v-btn>
-          </a>
-          <v-btn
-            color="primary"
-            class="ml-2"
-            @click="wideOverlay()"
-            v-if="!$vuetify.breakpoint.smAndDown"
-          >
-            <v-icon size="20">{{fullscreenIcon}}</v-icon>
-          </v-btn>
+          <v-tooltip left>
+            <template v-slot:activator="{ on }">
+              <navigator-share
+                v-bind:on-error="onError"
+                :url="'https://kallers.se/photography/' + overlayProp.photo.filename"
+                title="Kaller Creations"
+                text
+              >
+                <v-btn color="primary" v-on="on">
+                  <v-icon size="20">mdi-share-variant</v-icon>
+                </v-btn>
+              </navigator-share>
+            </template>
+            <span>Copy link to clipboard</span>
+          </v-tooltip>
+
+          <v-tooltip top>
+            <template v-slot:activator="{ on }">
+              <a
+                :download="overlayProp.photo.filename"
+                :href="'https://kallers.se/images/2k/' + overlayProp.photo.filename"
+              >
+                <v-btn color="primary" class="ml-2" v-on="on">
+                  <v-icon size="20">mdi-download</v-icon>
+                </v-btn>
+              </a>
+            </template>
+            <span>Download photo</span>
+          </v-tooltip>
+          <v-tooltip right>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                color="primary"
+                class="ml-2"
+                @click="wideOverlay()"
+                v-if="!$vuetify.breakpoint.smAndDown"
+                v-on="on"
+              >
+                <v-icon size="20">{{fullscreenIcon}}</v-icon>
+              </v-btn>
+            </template>
+            <span>Toggle fullscreen</span>
+          </v-tooltip>
         </div>
       </div>
     </div>

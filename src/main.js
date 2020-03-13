@@ -6,8 +6,12 @@ import store from './store'
 import vuetify from './plugins/vuetify';
 import hostMixin from './services/hostMixin'
 import VueClipboard from 'vue-clipboard2'
+import VueMasonry from 'vue-masonry-css'
+import VueYouTubeEmbed from 'vue-youtube-embed'
 
 Vue.use(VueClipboard)
+Vue.use(VueMasonry)
+Vue.use(VueYouTubeEmbed)
 
 Vue.config.productionTip = false
 

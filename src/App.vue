@@ -85,11 +85,6 @@ export default {
 </script>
 
 <style>
-.navspacer {
-  height: 64px;
-  background-color: #383838;
-}
-
 .navDrawer {
   position: fixed !important;
 }

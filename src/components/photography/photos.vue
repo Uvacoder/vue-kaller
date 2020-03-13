@@ -1,59 +1,64 @@
 <template>
-  <div class="mt-10">
-    <v-overlay :value="overlay" opacity="0.9">
-      <overlay
-        :overlay-prop="overlayProp"
-        :window-size="windowSize"
-        @close="closeOverlay"
-        @next="nextOverlay"
-        @prev="prevOverlay"
-        @fullscreen="toggleFullscreen"
-      ></overlay>
-    </v-overlay>
+  <div class="mt-7">
     <v-container>
+      <v-overlay :value="overlay" opacity="0.9">
+        <overlay
+          :overlay-prop="overlayProp"
+          :window-size="windowSize"
+          @close="closeOverlay"
+          @next="nextOverlay"
+          @prev="prevOverlay"
+          @fullscreen="toggleFullscreen"
+        ></overlay>
+      </v-overlay>
       <v-row align="center" justify="center"></v-row>
       <v-row justify="space-between">
-        <v-col class="pa-0 ma-0 pl-5 d-flex justify-start">
-          <v-btn @click="flipPhotos()" height="48px" class="mr-2 pa-0">
-            <v-icon class="pa-0">{{order.icon}}</v-icon>
+        <v-col :class="`d-flex justify-start px-${text ? 5 : 4} `">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn @click="flipPhotos()" height="48px" class="mr-2 pa-0" v-on="on">
+                <v-icon class="pa-0">{{order.icon}}</v-icon>
+              </v-btn>
+            </template>
+            <span>Sort by date</span>
+          </v-tooltip>
+
+          <v-btn large height="48px">
+            <v-icon class="pa-0">mdi-filter-menu</v-icon>
           </v-btn>
-          <!--                    <v-btn large height="48px">-->
-          <!--                        <v-icon class="pa-0">mdi-filter-menu</v-icon>-->
-          <!--                    </v-btn>-->
         </v-col>
-        <v-col class="pa-0 ma-0 pr-5 d-flex justify-end">
+        <v-col :class="`d-flex justify-end px-${text ? 5 : 4}  `">
           <v-btn-toggle v-model="columns.mode">
-            <v-btn
-              v-for="(size,index) in columns.allowedSizes"
-              @click="splitPhotosV2(size)"
-              v-bind:key="index"
-            >
-              <v-icon>{{columns.icons[size]}}</v-icon>
-            </v-btn>
+            <v-tooltip bottom v-for="(size,index) in columns.allowedSizes" v-bind:key="index">
+              <template v-slot:activator="{ on }">
+                <v-btn @click="splitPhotosV2(size)" v-on="on">
+                  <v-icon>{{columns.icons[size]}}</v-icon>
+                </v-btn>
+              </template>
+              <span>Show {{size}} photos per row</span>
+            </v-tooltip>
           </v-btn-toggle>
         </v-col>
       </v-row>
-      <v-fade-transition>
-        <v-row no-gutters v-show="show" class="pt-0 mt-0">
-          <v-col
-            v-for="(array,index) in splitPhotos"
-            v-bind:key="index"
-            :class="'d-flex flex-column'+order.reverse+' justify-'+order.justify"
-          >
-            <div v-for="photo in array" class="d-flex pa-1" v-bind:key="photo.id">
-              <v-hover v-slot:default="{ hover }">
-                <photoCard
-                  :class="`elevation-${hover ? 24 : 0}`"
-                  :photo="photo"
-                  :click="showOverlay"
-                  :text="text"
-                  :hover="hover"
-                ></photoCard>
-              </v-hover>
-            </div>
-          </v-col>
-        </v-row>
-      </v-fade-transition>
+      <v-row no-gutters v-show="show" class="pt-0 mt-0">
+        <v-col
+          v-for="(array,index) in splitPhotos"
+          v-bind:key="index"
+          :class="'d-flex flex-column'+order.reverse+' justify-'+order.justify"
+        >
+          <div v-for="photo in array" :class="`d-flex pa-${text ? 2 : 1}`" v-bind:key="photo.id">
+            <v-hover v-slot:default="{ hover }">
+              <photoCard
+                :class="`elevation-${hover ? 24 : 0}`"
+                :photo="photo"
+                :click="showOverlay"
+                :text="text"
+                :hover="hover"
+              ></photoCard>
+            </v-hover>
+          </div>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
@@ -78,6 +83,7 @@ export default {
         index: 0,
         fullscreen: false
       },
+      paddingSize: 2,
       splitPhotos: {},
       order: {
         reverse: "",
@@ -85,7 +91,7 @@ export default {
         icon: "mdi-sort-descending"
       },
       columns: {
-        amount: 3,
+        amount: 6,
         size: 4,
         allowedSizes: [],
         mode: 0,

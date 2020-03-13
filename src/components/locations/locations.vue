@@ -2,13 +2,33 @@
   <div class="mt-7">
     <v-container>
       <v-row>
-        <v-col :cols="3">
-          <v-btn @click="flipLocations()" height="48px" class="mr-2 pa-0">
-            <v-icon class="pa-0">{{order.icon}}</v-icon>
-          </v-btn>
+        <v-col :md="6" :lg="8">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn @click="sortByRating()" height="48px" class="mr-2 pa-0" v-on="on">
+                <v-icon class="pa-0">mdi-heart</v-icon>
+                <v-icon class="pa-0">{{order.icon}}</v-icon>
+              </v-btn>
+            </template>
+            <span>Sort by rating</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn
+                @click="openInMaps()"
+                height="48px"
+                class="mr-2 pa-0"
+                v-on="on"
+                color="primary"
+              >
+                <v-icon>mdi-google-maps</v-icon>
+              </v-btn>
+            </template>
+            <span>See my contributions on google maps!</span>
+          </v-tooltip>
         </v-col>
-        <v-spacer></v-spacer>
-        <v-col height="48px" class="pa-3 ma-0 rounded test" :cols="9" :md="6" :lg="4">
+        <v-col height="48px" class="pa-3 ma-0 rounded test" :md="6" :lg="4">
           <div>
             <v-autocomplete
               :items="locationNames"
@@ -29,8 +49,8 @@
           :cols="12"
           :md="6"
           :lg="4"
-          v-for="location in locations"
-          v-bind:key="location.name"
+          v-for="(location,index) in locations"
+          v-bind:key="index"
           class="pa-3"
         >
           <v-hover v-slot:default="{ hover }">
@@ -40,7 +60,7 @@
             >
               <v-img
                 :aspect-ratio="7/4"
-                :src="location.photo"
+                :src="'https://kallers.se/images/low/'+location.photos[0]"
                 class="imgtext"
                 gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
               >
@@ -49,7 +69,17 @@
                   color="white"
                 >
                   <p class="display-2 font-weight-light white--text ma-0">{{location.name}}</p>
-                  <p class="headline white--text">{{location.coords}}</p>
+                  <p class="headline white--text ma-0">{{location.coords}}</p>
+                  <v-rating
+                    v-model="location.rating"
+                    color="white"
+                    half-increments
+                    background-color="grey"
+                    empty-icon="mdi-heart-outline"
+                    half-icon="mdi-heart-half-full"
+                    full-icon="mdi-heart"
+                    readonly
+                  ></v-rating>
                 </div>
               </v-img>
             </v-card>
@@ -91,12 +121,31 @@ export default {
         this.$router.push("/locations/" + this.selectedLocation);
       }
     },
-    flipLocations() {
+    sortByRating() {
       //flips the order of the columns with flex
-      this.order.icon !== "mdi-sort-descending"
-        ? (this.order.icon = "mdi-sort-descending")
-        : (this.order.icon = "mdi-sort-ascending");
-      this.locations.reverse();
+      this.locations.sort(sortByRating);
+      if (this.order.icon !== "mdi-sort-descending") {
+        this.order.icon = "mdi-sort-descending";
+        this.locations.reverse();
+      } else {
+        this.order.icon = "mdi-sort-ascending";
+      }
+
+      function sortByRating(a, b) {
+        if (a.rating < b.rating) {
+          return -1;
+        }
+        if (a.rating > b.rating) {
+          return 1;
+        }
+        return 0;
+      }
+    },
+    openInMaps() {
+      window.open(
+        "https://www.google.se/maps/contrib/106633097459000923158",
+        "_blank"
+      );
     }
   },
   mounted() {
