@@ -309,6 +309,13 @@ export default {
     //If browser presses backbutton overlay needs to be changed but since the component is still alive that didnt do it by itself
     next();
     this.photoSelected();
+  },
+  beforeRouteEnter(to, from, next) {
+    //since the component isn't rendered at this stage you need to use the viewmodel
+    next(vm => {
+      vm.photoSelected();
+      next();
+    });
   }
 };
 </script>

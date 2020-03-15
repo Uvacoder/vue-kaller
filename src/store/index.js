@@ -51,12 +51,11 @@ export default new Vuex.Store({
           name: "Hackelboön",
           rating: 3,
           photos: [
-            "DJI_0357.jpg",
-            "DJI_0357.jpg",
             "DJI_0353.jpg",
+            "DJI_0357.jpg",
             "_MK20319-Redigera.jpg",
             "_MK20314.jpg",
-            "_MK20319-Redigera.jpg",
+            "_MK24522.jpg"
           ],
           history: [
             '28th February 2020',
@@ -73,10 +72,11 @@ export default new Vuex.Store({
           ]
         },
         {
-          coords: `58°09'47.4"N 15°40'10.8"E`,
+          coords: `58°20'00.3"N 14°38'52.6"E`,
           name: "Omberg",
           rating: 4.7,
           photos: [
+            "_MK21460.jpg",
             "_MK29525.jpg",
             "_MK21028-Redigera.jpg",
             "_MK20983.jpg",
@@ -96,19 +96,31 @@ export default new Vuex.Store({
             "_MK28964.jpg",
             "_MK28956-Pano.jpg"
           ],
-          paragrafs: ["Omberg ligger i Östergötland vid Vätterns strand och är landets artrikaste skogslandskap med många sällsynta naturmiljöer. Den vackra bokskogen i sluttningen ner mot Vättern, jätteekarna i beteslandskapet och de färgsprakande slåtterängarna är några av dem.","En milslång rasbrant med naturskogar sätter också stor prägel på landskapet. Du kan njuta av den fantastiska utsikten från Hjässan - Ombergs högsta punkt - och vandra bland jätteekar och månghundraåriga granar eller låta dig fängslas av de vackra orkidéerna som finns i Ombergs många kalkkärr."]
+          paragrafs: ["Omberg ligger i Östergötland vid Vätterns strand och är landets artrikaste skogslandskap med många sällsynta naturmiljöer. Den vackra bokskogen i sluttningen ner mot Vättern, jätteekarna i beteslandskapet och de färgsprakande slåtterängarna är några av dem.", "En milslång rasbrant med naturskogar sätter också stor prägel på landskapet. Du kan njuta av den fantastiska utsikten från Hjässan - Ombergs högsta punkt - och vandra bland jätteekar och månghundraåriga granar eller låta dig fängslas av de vackra orkidéerna som finns i Ombergs många kalkkärr."
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
-          name: "Häradskär",
+          name: "Häradsskär",
           rating: 3.5,
           photos: [
             "_MK26160.jpg",
-            "DJI_0357.jpg",
-            "DJI_0353.jpg",
-            "_MK20319-Redigera.jpg",
-            "_MK20314.jpg",
-            "_MK20319-Redigera.jpg",
+            "_MK26124.jpg",
+            "_MK26249.jpg",
+          ],
+          paragrafs: [
+            'Längst ut i det Östgötska havsbandet ligger ön Häradskär. Ön har varit en välkänd fiskeplats sedan början av medeltiden. Landskapet är flackt och består av två skär som är förbundna av en spång. Under flera århundraden har människor levt och arbetat här, alltid lika beroende av vädrets makter.',
+            'Häradskärs fyr är belägen på Stångskär, vars namn kommer från att man under 1600-talet använde en tunna på en stång som navigationsmärke på ön. År 1745 uppförde Norrköpings stad en drygt 25m hög åttakantig träbåk på skäret, vars grundstenar finns kvar än idag.'
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
           ],
         },
         {
@@ -123,6 +135,11 @@ export default new Vuex.Store({
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
           ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -135,6 +152,11 @@ export default new Vuex.Store({
             "_MK20319-Redigera.jpg",
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
           ],
         },
         {
@@ -149,6 +171,11 @@ export default new Vuex.Store({
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
           ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -161,6 +188,11 @@ export default new Vuex.Store({
             "_MK20319-Redigera.jpg",
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
           ],
         },
         {
@@ -175,6 +207,11 @@ export default new Vuex.Store({
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
           ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -187,6 +224,11 @@ export default new Vuex.Store({
             "_MK20319-Redigera.jpg",
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
           ],
         },
         {
@@ -201,6 +243,12 @@ export default new Vuex.Store({
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
           ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
+          googlealbum: 'https://photos.app.goo.gl/2bWdem8ese9sp9PfA'
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -208,12 +256,20 @@ export default new Vuex.Store({
           rating: 5,
           photos: [
             "_MK27217.jpg",
-            "DJI_0357.jpg",
-            "DJI_0353.jpg",
-            "_MK20319-Redigera.jpg",
-            "_MK20314.jpg",
-            "_MK20319-Redigera.jpg",
+            "_MK27318-Redigera.jpg",
+            "_MK27491.jpg",
+            "_MK27566.jpg",
           ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
+          ],
+          googlealbum: 'https://photos.app.goo.gl/2bWdem8ese9sp9PfA',
+          paragrafs: [
+            'Fulufjället bjuder på en fjällupplevelse utöver det vanliga. Här kan du se spår av Sveriges största djur och njuta av vidderna på längdskidor, snöskoter eller från en renfäll med en kopp varm choklad.',
+            'Njupeskärs vattenfall är ett av de högsta i Sverige med sina 93 meter och har en fri fallhöjd på 70 meter. Under årtusenden har vattnet mejslat ut en stor klyfta. Hit kommer de flesta besökare. På toppen av fallet har du en fantastisk utsikt över klyftan och landskapet.'
+          ]
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -226,6 +282,11 @@ export default new Vuex.Store({
             "_MK20319-Redigera.jpg",
             "_MK20314.jpg",
             "_MK20319-Redigera.jpg",
+          ],
+          history: [
+            '28th February 2020',
+            '4th February 2020',
+            '12th October 2019'
           ],
         },
         {

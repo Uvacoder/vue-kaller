@@ -11,7 +11,6 @@ import VueYouTubeEmbed from 'vue-youtube-embed'
 
 Vue.use(VueClipboard)
 Vue.use(VueMasonry)
-Vue.use(VueYouTubeEmbed)
 
 Vue.config.productionTip = false
 

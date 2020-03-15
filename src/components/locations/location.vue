@@ -17,10 +17,9 @@
               <v-btn
                 v-on="on"
                 @click="openInMaps()"
-                v-show="!$vuetify.breakpoint.smAndDown"
                 height="48px"
                 class="mr-2 pa-0"
-                color="success"
+                color="primary"
               >
                 <v-icon class="pa-0">mdi-google-maps</v-icon>
               </v-btn>
@@ -28,9 +27,9 @@
             <span>Open {{location.name}} in google maps</span>
           </v-tooltip>
         </div>
-        <v-spacer v-if="!$vuetify.breakpoint.xlOnly"></v-spacer>
-        <v-col class="pa-3 ma-0 rounded test" :cols="7" :md="6" :lg="4">
-          <div v-if="!$vuetify.breakpoint.smAndDown">
+        <v-spacer v-show="!$vuetify.breakpoint.smAndDown"></v-spacer>
+        <v-col class="pa-3 ma-0 rounded test" :md="6" :lg="4">
+          <div>
             <v-autocomplete
               :items="locationNames"
               @change="locationSearched"
@@ -42,11 +41,6 @@
               autocomplete="off"
               height="48px"
             ></v-autocomplete>
-          </div>
-          <div v-if="$vuetify.breakpoint.smAndDown" class="d-flex justify-end">
-            <v-btn @click="openInMaps()" height="48px" class="mr-2 pa-0">
-              <v-icon class="pa-0">mdi-google-maps</v-icon>
-            </v-btn>
           </div>
         </v-col>
       </v-row>
@@ -61,6 +55,7 @@
                   class="pa-1 ma-2"
                   v-for="(item, index) in location.photos"
                   :key="index"
+                  @click="$router.push('/photography/' + item)"
                 >
                   <v-img :src="'https://kallers.se/images/2k/'+item"></v-img>
                 </v-card>
@@ -90,24 +85,6 @@
               <iframe width="100%" height="100%" :src="src" frameborder="0" allow allowfullscreen></iframe>
             </v-responsive>
           </v-card>
-          <v-card class="my-4 text-center" dark v-if="$vuetify.breakpoint.xlOnly">
-            <v-card-text>
-              <v-sheet color="rgba(0, 0, 0, .12)">
-                <v-sparkline
-                  :value="value"
-                  color="rgba(255, 255, 255, .7)"
-                  height="100"
-                  padding="24"
-                  stroke-linecap="round"
-                  smooth
-                  :labels="seasons"
-                ></v-sparkline>
-              </v-sheet>
-            </v-card-text>
-            <v-card-text>
-              <div class="headline white--text">Seasons photographed</div>
-            </v-card-text>
-          </v-card>
         </v-col>
       </v-row>
     </v-container>
@@ -131,9 +108,7 @@ export default {
         reverse: "",
         justify: "start",
         icon: "mdi-sort-descending"
-      },
-      value: [1, 0, 1, 2],
-      seasons: ["Spring", "Summer", "Autumn", "Winter"]
+      }
     };
   },
   components: {

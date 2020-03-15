@@ -4,7 +4,7 @@
       Link copied to clipboard!
       <v-btn color="white" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
-
+    <p class="title px-3 pt-3 ma-0">{{location.coords}}</p>
     <p
       class="body-1 px-3 pt-3 ma-0"
       v-for="(paragraf,index) in location.paragrafs"
@@ -12,30 +12,51 @@
     >{{paragraf}}</p>
 
     <div class="d-flex px-3 py-3 ma-0">
-      <v-tooltip bottom v-if="$vuetify.breakpoint.xlOnly">
+      <v-tooltip bottom>
         <template v-slot:activator="{ on }">
           <v-btn
             v-on="on"
-            @click="openInMaps()"
+            :href="'https://www.google.com/maps/search/?api=1&query=' + location.name"
             v-show="!$vuetify.breakpoint.smAndDown"
             height="36px"
-            class="mr-2 pa-0"
+            v-if="$vuetify.breakpoint.xlOnly"
+            class="mr-2 pa-1"
             color="success"
+            target="_blank"
           >
+            Open in maps
             <v-icon class="pa-0">mdi-google-maps</v-icon>
           </v-btn>
         </template>
         <span>Open {{location.name}} in google maps</span>
       </v-tooltip>
-      <v-tooltip right v-if="$vuetify.breakpoint.xlOnly">
+      <v-tooltip bottom v-if="location.googlealbum">
+        <template v-slot:activator="{ on }">
+          <v-btn
+            v-on="on"
+            height="36px"
+            class="mr-2 pa-1"
+            color="warning"
+            :href="location.googlealbum"
+            target="_blank"
+          >
+            Show album
+            <v-icon class="pa-0">mdi-google-photos</v-icon>
+          </v-btn>
+        </template>
+        <span>Open album of trip to {{location.name}} in google photos</span>
+      </v-tooltip>
+
+      <v-tooltip right>
         <template v-slot:activator="{ on }">
           <navigator-share
             v-bind:on-error="onError"
-            :url="'https://kallers.se/photography/'"
+            :url="'https://kallers.se/locations/' +location.name"
             title="Kaller Creations"
             text
           >
             <v-btn color="primary" v-on="on">
+              Share
               <v-icon size="20">mdi-share-variant</v-icon>
             </v-btn>
           </navigator-share>
@@ -71,15 +92,9 @@ export default {
     };
   },
   methods: {
-    openInMaps() {
-      window.open(
-        "https://www.google.com/maps/search/?api=1&query=" + this.location.name,
-        "_blank"
-      );
-    },
     onError() {
       console.log("error");
-      this.doCopy("https://kallers.se/photography/" + this.$route.params.photo);
+      this.doCopy("https://kallers.se/locations/" + this.location.name);
       this.snackbar = true;
     },
     doCopy: function(text) {

@@ -2,7 +2,7 @@
   <div class="mt-7">
     <v-container>
       <v-row>
-        <v-col :md="6" :lg="8">
+        <div class="d-flex align-center justify-center ml-3">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn @click="sortByRating()" height="48px" class="mr-2 pa-0" v-on="on">
@@ -16,7 +16,8 @@
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn
-                @click="openInMaps()"
+                href="https://www.google.se/maps/contrib/106633097459000923158"
+                target="_blank"
                 height="48px"
                 class="mr-2 pa-0"
                 v-on="on"
@@ -27,7 +28,8 @@
             </template>
             <span>See my contributions on google maps!</span>
           </v-tooltip>
-        </v-col>
+        </div>
+        <v-spacer v-show="!$vuetify.breakpoint.smAndDown"></v-spacer>
         <v-col height="48px" class="pa-3 ma-0 rounded test" :md="6" :lg="4">
           <div>
             <v-autocomplete
@@ -140,12 +142,6 @@ export default {
         }
         return 0;
       }
-    },
-    openInMaps() {
-      window.open(
-        "https://www.google.se/maps/contrib/106633097459000923158",
-        "_blank"
-      );
     }
   },
   mounted() {
