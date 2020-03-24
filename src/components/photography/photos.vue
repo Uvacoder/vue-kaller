@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-7">
+  <div>
     <v-container>
       <v-overlay :value="overlay" opacity="0.9">
         <overlay
@@ -13,7 +13,7 @@
       </v-overlay>
       <v-row align="center" justify="center"></v-row>
       <v-row justify="space-between">
-        <v-col :class="`d-flex justify-start px-${text ? 5 : 4} `">
+        <v-col :class="`d-flex justify-start pb-1 px-${text ? 5 : 4} `">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
               <v-btn @click="flipPhotos()" height="48px" class="mr-2 pa-0" v-on="on">
@@ -27,7 +27,7 @@
             <v-icon class="pa-0">mdi-filter-menu</v-icon>
           </v-btn>
         </v-col>
-        <v-col :class="`d-flex justify-end px-${text ? 5 : 4}  `">
+        <v-col :class="`d-flex justify-end pb-1 px-${text ? 5 : 4}  `">
           <v-btn-toggle v-model="columns.mode">
             <v-tooltip bottom v-for="(size,index) in columns.allowedSizes" v-bind:key="index">
               <template v-slot:activator="{ on }">
@@ -185,6 +185,7 @@ export default {
     nextOverlay() {
       let index = this.overlayProp.index;
       this.$router.push("/photography/" + this.photos[index + 1].filename);
+      console.log(this.windowSize.y);
     },
     prevOverlay() {
       let index = this.overlayProp.index;

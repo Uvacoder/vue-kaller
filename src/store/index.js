@@ -94,7 +94,12 @@ export default new Vuex.Store({
             "_MK29115.jpg",
             "_MK28996.jpg",
             "_MK28964.jpg",
-            "_MK28956-Pano.jpg"
+            "_MK28956-Pano.jpg",
+            "_MK28946.jpg",
+            "_MK28706.jpg",
+            "_MK28043-Redigera.jpg",
+            "_MK28005.jpg",
+            "_MK26649.jpg"
           ],
           paragrafs: ["Omberg ligger i Östergötland vid Vätterns strand och är landets artrikaste skogslandskap med många sällsynta naturmiljöer. Den vackra bokskogen i sluttningen ner mot Vättern, jätteekarna i beteslandskapet och de färgsprakande slåtterängarna är några av dem.", "En milslång rasbrant med naturskogar sätter också stor prägel på landskapet. Du kan njuta av den fantastiska utsikten från Hjässan - Ombergs högsta punkt - och vandra bland jätteekar och månghundraåriga granar eller låta dig fängslas av de vackra orkidéerna som finns i Ombergs många kalkkärr."
           ],
@@ -118,28 +123,43 @@ export default new Vuex.Store({
             'Häradskärs fyr är belägen på Stångskär, vars namn kommer från att man under 1600-talet använde en tunna på en stång som navigationsmärke på ön. År 1745 uppförde Norrköpings stad en drygt 25m hög åttakantig träbåk på skäret, vars grundstenar finns kvar än idag.'
           ],
           history: [
-            '28th February 2020',
-            '4th February 2020',
-            '12th October 2019'
+            '26th May 2019',
+            '25th May 2019',
           ],
         },
         {
-          coords: `58°09'47.4"N 15°40'10.8"E`,
+          coords: `58°30'46.0"N 15°29'16.2"E`,
           name: "Göta Kanal",
           rating: 3.4,
           photos: [
             "P1410002-HDR.jpg",
-            "DJI_0357.jpg",
-            "DJI_0353.jpg",
-            "_MK20319-Redigera.jpg",
-            "_MK20314.jpg",
-            "_MK20319-Redigera.jpg",
+            "MK203828.jpg",
+            "MK203820.jpg",
+            "MK202652-HDR.jpg",
+            "MK203876.jpg",
+            "_MK28493.jpg",
+            "_MK28292-Redigera.jpg",
+            "_MK28479.jpg",
+            "_MK28292-Redigera.jpg",
+            "_MK28623.jpg",
+            "_MK28613.jpg",
+            "focusstack.jpg",
+            "MK204240.jpg",
+            "DJI_0030.jpg"
           ],
           history: [
-            '28th February 2020',
-            '4th February 2020',
-            '12th October 2019'
+            '28th September 2019',
+            '13th September 2019',
+            '4th October 2018',
+            '5th September 2018',
+            '5th June 2018',
+            '30th September 2017'
           ],
+          paragrafs: [
+            'Längst med Göta Kanal en höstmorgon kan det bli riktigt fint. Pågrund av dess smallhet så blir det väldigt ofta perfekta spegelbilder vilket jag älskar. De gamla slussvägarna kan ofta ge bra struktur till landskapet och ge en hel del mer karaktär',
+            'Jag har växt upp längst med Göta Kanal och min fotoresa är starkt knuten till kanalen',
+            'En morgon 5:e September var verkligen då mitt fotade startade. Då gick alarmet 05 innan en skoldag för att jag skulle lyckas fånga dimman på bild. Mina bästa bilder är fortfarande tagna 100 meter från huset'
+          ]
         },
         {
           coords: `58°09'47.4"N 15°40'10.8"E`,
@@ -147,11 +167,13 @@ export default new Vuex.Store({
           rating: 4,
           photos: [
             "_MK27876-Redigera.jpg",
-            "DJI_0357.jpg",
-            "DJI_0353.jpg",
-            "_MK20319-Redigera.jpg",
-            "_MK20314.jpg",
-            "_MK20319-Redigera.jpg",
+            'DJI_0301.jpg',
+            'DJI_0308-HDR.jpg',
+            '_MK27599-Redigera.jpg',
+            '_MK27860.jpg'
+          ],
+          paragrafs: [
+            'Haverdalsreservatet ligger precis vid havet och är ett av Hallands äldsta naturreservat. Här är naturen varierad och krokiga tallar och barrbeklädda stigar blandas med sanddyner och strandhed.',
           ],
           history: [
             '28th February 2020',

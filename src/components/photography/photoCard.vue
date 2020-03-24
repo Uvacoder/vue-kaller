@@ -2,7 +2,6 @@
   <v-card
     :class="{'pa-1 photocard ': true, 'disabled': true}"
     :ripple="!$vuetify.breakpoint.smAndDown"
-    tile
   >
     <v-img
       v-show="!$vuetify.breakpoint.smAndDown"

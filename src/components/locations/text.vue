@@ -51,7 +51,7 @@
         <template v-slot:activator="{ on }">
           <navigator-share
             v-bind:on-error="onError"
-            :url="'https://kallers.se/locations/' +location.name"
+            :url="'https://kallers.se/locations/' + $route.params.location.unSwedify()"
             title="Kaller Creations"
             text
           >
@@ -81,6 +81,8 @@
 
 <script>
 import NavigatorShare from "vue-navigator-share";
+import "../../services/unswedifyString";
+
 export default {
   name: "locationText",
   props: {
@@ -93,8 +95,11 @@ export default {
   },
   methods: {
     onError() {
-      console.log("error");
-      this.doCopy("https://kallers.se/locations/" + this.location.name);
+      console.log(this.$route.params.location.unSwedify());
+      this.doCopy(
+        "https://kallers.se/locations/" +
+          this.$route.params.location.unSwedify()
+      );
       this.snackbar = true;
     },
     doCopy: function(text) {

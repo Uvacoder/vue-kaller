@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-7">
+  <div>
     <v-container>
       <v-row v-if="!$vuetify.breakpoint.xlOnly">
         <div class="d-flex align-center justify-center ml-3">
@@ -53,11 +53,11 @@
                 <v-card
                   light
                   class="pa-1 ma-2"
-                  v-for="(item, index) in location.photos"
+                  v-for="(photo, index) in location.photos"
                   :key="index"
-                  @click="$router.push('/photography/' + item)"
+                  @click="$router.push('/photography/' + photo)"
                 >
-                  <v-img :src="'https://kallers.se/images/2k/'+item"></v-img>
+                  <v-img :src="'https://kallers.se/images/2k/'+photo"></v-img>
                 </v-card>
               </masonry>
             </v-card>
@@ -94,6 +94,7 @@
 <script>
 import { mapState } from "vuex";
 import "../../services/findKey.js";
+import "../../services/unswedifyString.js";
 import locationHeader from "./header";
 import locationText from "./text";
 
@@ -116,7 +117,7 @@ export default {
     locationText
   },
   computed: {
-    ...mapState(["locations", "windowSize"])
+    ...mapState(["locations", "windowSize", "photos"])
   },
   created() {
     console.log("HELLO?????", this.$route.params.location);
@@ -132,6 +133,7 @@ export default {
           .findKey(this.$route.params.location, "name")
           .then(location => {
             if (location) {
+              console.log("LOCATION SELECTED", location);
               this.location = location;
               this.searchedLocation = location.name;
               this.$vuetify.goTo(-1000);

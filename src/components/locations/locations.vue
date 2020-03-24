@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-7">
+  <div class="mt-3">
     <v-container>
       <v-row>
         <div class="d-flex align-center justify-center ml-3">
@@ -30,7 +30,7 @@
           </v-tooltip>
         </div>
         <v-spacer v-show="!$vuetify.breakpoint.smAndDown"></v-spacer>
-        <v-col height="48px" class="pa-3 ma-0 rounded test" :md="6" :lg="4">
+        <v-col height="48px" class="ma-0 rounded test pa-0 px-3" :md="6" :lg="4">
           <div>
             <v-autocomplete
               :items="locationNames"
@@ -58,7 +58,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card
               :class="`elevation-${hover ? 24 : 0}`"
-              @click="$router.push('/locations/' + location.name)"
+              @click="$router.push('/locations/' + location.name.unSwedify())"
             >
               <v-img
                 :aspect-ratio="7/4"
@@ -94,6 +94,7 @@
 
 <script>
 import { mapState } from "vuex";
+import "../../services/unswedifyString.js";
 
 export default {
   name: "Locations",

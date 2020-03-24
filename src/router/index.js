@@ -8,6 +8,7 @@ import login from "../components/login.vue";
 import isAuth from "../services/authenticate";
 import locations from "../components/locations/locations.vue";
 import location from "../components/locations/location.vue";
+import contact from "../components/contact/contact.vue";
 
 
 Vue.use(VueRouter);
@@ -63,6 +64,11 @@ const routes = [
     path: "/locations",
     name: "Locations",
     component: locations,
+  },
+  {
+    path: "/contact",
+    name: "Contacts",
+    component: contact,
   },
 ];
 
