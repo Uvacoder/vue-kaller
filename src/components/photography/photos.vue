@@ -146,7 +146,9 @@ export default {
         }
         this.overlay = true;
         if (this.$route.params.photo !== photo.filename)
-          this.$router.push("/photography/" + photo.filename);
+          this.$router.push(
+            "/" + this.$i18n.locale + "/photography/" + photo.filename
+          );
         if (this.$vuetify.breakpoint.smAndDown)
           this.overlayProp.fullscreen = true;
       }
@@ -180,16 +182,26 @@ export default {
     },
     closeOverlay(value) {
       this.overlay = value;
-      this.$router.push("/photography");
+      this.$router.push("/" + this.$i18n.locale + "/photography");
     },
     nextOverlay() {
       let index = this.overlayProp.index;
-      this.$router.push("/photography/" + this.photos[index + 1].filename);
+      this.$router.push(
+        "/" +
+          this.$i18n.locale +
+          "/photography/" +
+          this.photos[index + 1].filename
+      );
       console.log(this.windowSize.y);
     },
     prevOverlay() {
       let index = this.overlayProp.index;
-      this.$router.push("/photography/" + this.photos[index - 1].filename);
+      this.$router.push(
+        "/" +
+          this.$i18n.locale +
+          "/photography/" +
+          this.photos[index - 1].filename
+      );
     },
     toggleFullscreen(value, reset = false) {
       this.overlayProp.fullscreen = value;

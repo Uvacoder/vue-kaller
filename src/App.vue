@@ -6,8 +6,14 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <v-tabs v-model="tab" centered grow height="64">
-          <v-tab v-for="nav in navs" :to="nav.to" :key="nav.to" class="white--text">{{nav.name}}</v-tab>
+        <v-tabs centered grow height="64">
+          <v-tab
+            v-for="nav in navs"
+            :to="'/'+$i18n.locale+nav.to"
+            :key="nav.to"
+            class="white--text"
+            v-model="tab"
+          >{{$t(nav.name)}}</v-tab>
         </v-tabs>
         <!-- <v-btn to="/" text>Portfolio</v-btn>
         <v-btn to="/photography" text>Photography</v-btn>
@@ -41,8 +47,8 @@
       </v-toolbar-items>-->
       <v-list nav>
         <v-list-item-group>
-          <v-list-item v-for="nav in navs" :to="nav.to" :key="nav.to">
-            <v-list-item-title class="title font-weight-light">{{nav.name}}</v-list-item-title>
+          <v-list-item v-for="nav in navs" :to="'/'+$i18n.locale+nav.to" :key="nav.to">
+            <v-list-item-title class="title font-weight-light">{{$t(nav.name)}}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -72,23 +78,30 @@
           </v-tooltip>
         </v-card-text>
 
-        <v-card-text class="white--text pt-0 pb-0">
-          Martin Kaller, swedish based landscape photographer sharing his photography journey. Photographs are shot with Sony A7II together with the FE 16-35 F4 or Canon 70-200 F4.
-          To capture the wonder of the landscapes I enjoy being out before the sun is up. As the sun rises my camera is mounted on the tripod and I'm ready to capture the beauty of the scene.
-          Usually my photographs are around water, I think it helps lift the composition. My goal is to share the beauty of nature and what it has to offer, as well as sharing some of my favorite spots mainly around Linköping but also the whole of Sweden.
-        </v-card-text>
-        <v-card-text class="white--text pt-0 pb-0">
-          Martin Kaller, Linköpings baserad landskapsfotograf som delar sitt fotograferande.
-          Jag fotar med en Sony A7II tillsammans med en FE 16-35 F4 eller en Canon 70-200 F4. För att fånga landskapets tycker jag om att vara ute innan solen är uppe.
-          När solen går upp är min kamera på stativet och jag är redo att fånga landskapets skönhet. Vanligtvis är mina fotografier tagna runt vatten, jag tror att det hjälper till att lyfta kompositionen.
-          Mitt mål är att dela naturens skönhet och vad den har att erbjuda, samt att dela några av mina favorit fotoplatser främst runt Linköping, Östergötland men också hela Sverige.
-        </v-card-text>
-        <!-- <v-card-text
-          class="white--text pt-0"
-        >Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. Duis commodo vitae velit et faucibus. Morbi vehicula lacinia malesuada. Nulla placerat augue vel ipsum ultrices, cursus iaculis dui sollicitudin. Vestibulum eu ipsum vel diam elementum tempor vel ut orci. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-        </v-card-text>-->
+        <v-card-text class="white--text pt-0 pb-9">{{$t("footer.about")}}</v-card-text>
       </v-card>
     </v-footer>
+
+    <v-dialog v-model="languageDialog" scrollable max-width="300px">
+      <template v-slot:activator="{ on }">
+        <v-btn color="primary" dark v-on="on">Change language</v-btn>
+      </template>
+      <v-card style="min-height:400px">
+        <v-card-title>Select language</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-radio-group v-model="languageSelected" column>
+            <v-radio label="English" value="en"></v-radio>
+            <v-radio label="Svenska" value="sv"></v-radio>
+          </v-radio-group>
+        </v-card-text>
+        <v-card-text>{{$t('legal')}}</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="languageDialog = false">Save and agree</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -101,6 +114,9 @@ export default {
   data: () => ({
     drawer: false,
     start: false,
+    tab: 0,
+    languageSelected: "en",
+    languageDialog: false,
     icons: [
       {
         icon: "mdi-instagram",
@@ -141,23 +157,23 @@ export default {
     ],
     navs: [
       {
-        name: "Portfolio",
-        to: "/"
+        name: "navs.portfolio",
+        to: "/portfolio"
       },
       {
-        name: "Photography",
+        name: "navs.photography",
         to: "/photography"
       },
       {
-        name: "Locations",
-        to: "locations"
+        name: "navs.locations",
+        to: "/locations"
       },
       {
-        name: "Contact",
+        name: "navs.contact",
         to: "/contact"
       },
       {
-        name: "Dashboard",
+        name: "navs.dashboard",
         to: "/admin"
       }
     ]
@@ -176,19 +192,30 @@ export default {
   methods: {
     onError() {
       console.log("Navigatorshare not supported");
+    },
+    save() {
+      console.log(this.$route);
     }
   },
   mounted() {
     this.start = true;
+    if (localStorage.lang) {
+      this.$i18n.locale = localStorage.lang;
+      this.languageSelected = this.$i18n.locale;
+    } else this.languageDialog = true;
+  },
+  watch: {
+    languageSelected: {
+      handler: function(val, oldVal) {
+        this.$i18n.locale = val;
+        localStorage.lang = val;
+      }
+    }
   }
 };
 </script>
 
 <style>
-.navDrawerTab {
-  /* width: 300px !important; */
-}
-
 .navDrawer {
   position: fixed !important;
 }

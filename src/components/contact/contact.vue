@@ -5,9 +5,7 @@
         <v-col cols="12" md="12" lg="7" xl="8">
           <v-card dark class="pa-2 mb-2">
             <p class="display-3">Martin Kaller</p>
-            <p
-              class="body-1"
-            >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum, augue sed dapibus ultrices, velit sem laoreet tortor, at ornare est justo a est. Nulla iaculis erat ligula, sit amet aliquam sapien iaculis accumsan. Pellentesque imperdiet sed est at lacinia. Donec auctor, nulla id faucibus viverra, ipsum sapien elementum velit, at luctus mi mi a ipsum. Nam et quam non risus luctus imperdiet. Vestibulum et dictum orci. Mauris vehicula, nunc ultricies posuere tincidunt, eros sapien placerat nulla, a lobortis velit nunc eget mi. Phasellus et libero porta, luctus metus vel, auctor neque. Nullam malesuada magna quis risus aliquet, eget maximus odio viverra. Fusce tincidunt posuere metus, a fermentum libero ornare non. Nam sapien leo, cursus a lacinia ut, volutpat eget nunc. Duis tempor mi mauris, in posuere diam gravida ut. Donec auctor sodales sem. Integer bibendum ipsum eu tortor volutpat, feugiat facilisis lorem posuere. Ut cursus egestas nisi ac facilisis. Fusce malesuada nisl ut condimentum maximus.</p>
+            <p class="body-1">{{$t("contact.about")}}</p>
           </v-card>
           <v-card v-if="false" dark class="pa-2 mb-2">
             <v-col>
@@ -29,7 +27,10 @@
             </v-card-title>-->
 
             <v-tabs v-model="tab" centered grow>
-              <v-tab v-for="service in services" :key="service.name">{{ service.name }}</v-tab>
+              <v-tab
+                v-for="service in services"
+                :key="service.name"
+              >{{ $t(`contact.services.${service.name}.name`) }}</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -121,7 +122,7 @@ export default {
       items: ["Landskapsfotografering", "Drönarfotografering", "Porträtt"],
       services: [
         {
-          name: "Landskap",
+          name: "landscape",
           text:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum, augue sed dapibus ultrices, velit sem laoreet tortor, at ornare est justo a est. Nulla iaculis erat ligula, sit amet aliquam sapien iaculis accumsan. Pellentesque imperdiet sed est at lacinia. Donec auctor, nulla id faucibus viverra, ipsum sapien elementum velit, at luctus mi mi a ipsum. Nam et quam non risus luctus imperdiet.",
           photos: [
@@ -131,7 +132,7 @@ export default {
           ]
         },
         {
-          name: "Flygfoto",
+          name: "drone",
           text:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum, augue sed dapibus ultrices, velit sem laoreet tortor, at ornare est justo a est. Nulla iaculis erat ligula, sit amet aliquam sapien iaculis accumsan. Pellentesque imperdiet sed est at lacinia. Donec auctor, nulla id faucibus viverra, ipsum sapien elementum velit, at luctus mi mi a ipsum. Nam et quam non risus luctus imperdiet.",
           photos: [
@@ -141,7 +142,7 @@ export default {
           ]
         },
         {
-          name: "Interiörer",
+          name: "interior",
           text:
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam fermentum, augue sed dapibus ultrices, velit sem laoreet tortor, at ornare est justo a est. Nulla iaculis erat ligula, sit amet aliquam sapien iaculis accumsan. Pellentesque imperdiet sed est at lacinia. Donec auctor, nulla id faucibus viverra, ipsum sapien elementum velit, at luctus mi mi a ipsum. Nam et quam non risus luctus imperdiet.",
           photos: [

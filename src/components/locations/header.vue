@@ -6,7 +6,7 @@
           <template v-slot:activator="{ on }">
             <v-btn
               light
-              @click="$router.push('/locations/')"
+              :to="'/'+$i18n.locale+'/locations'"
               height="48px"
               class="mr-2 pa-0"
               v-on="on"
@@ -14,7 +14,7 @@
               <v-icon class="pa-0">mdi-arrow-left</v-icon>
             </v-btn>
           </template>
-          <span>Go back to locations</span>
+          <span>Go back to locations skrrr</span>
         </v-tooltip>
       </div>
       <p class="white--text display-3 ma-0">{{location.name}}</p>

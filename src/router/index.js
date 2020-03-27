@@ -9,67 +9,106 @@ import isAuth from "../services/authenticate";
 import locations from "../components/locations/locations.vue";
 import location from "../components/locations/location.vue";
 import contact from "../components/contact/contact.vue";
+import i18n from '../i18n.js';
+
+console.log(i18n)
 
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/home",
-    name: "home",
-    component: Home
+    path: '/',
+    redirect: `/${i18n.locale}/portfolio`
   },
   {
-    path: "/admin",
-    name: "Admin",
-    component: Admin,
-    beforeEnter: async (to, from, next) => {
-      console.log("isAuth: ", await isAuth());
-      if (await isAuth()) {
-        next();
-      } else {
-        next("/login");
-      }
-    }
+    path: '/photography',
+    redirect: `/${i18n.locale}/photography`
   },
   {
-    path: "/photography",
-    name: "Photography",
-    component: photos,
+    path: '/photography/:file',
+    redirect: `/${i18n.locale}/photography/:file`
+  },
+  {
+    path: '/locations/',
+    redirect: `/${i18n.locale}/locations/`
+  },
+  {
+    path: '/locations/:location',
+    redirect: `/${i18n.locale}/locations/:location`
+  },
+  {
+    path: '/contact',
+    redirect: `/${i18n.locale}/contact`
+  },
+  {
+    path: '/:lang',
+    component: {
+      render (c) { return c('router-view')}
+    },
     children: [
       {
-        path: ":photo",
+        path: "home",
+        name: "home",
+        component: Home
+      },
+      {
+        path: "admin",
+        name: "Admin",
+        component: Admin,
+        beforeEnter: async (to, from, next) => {
+          console.log("isAuth: ", await isAuth());
+          if (await isAuth()) {
+            next();
+          } else {
+            next("/login");
+          }
+        }
+      },
+      {
+        path: "photography",
         name: "Photography",
         component: photos,
-        props: true
-      }
+        children: [
+          {
+            path: ":photo",
+            name: "Photography",
+            component: photos,
+            props: true
+          }
+        ]
+      },
+      {
+        path: "/",
+        redirect: `/${i18n.locale}/portfolio`
+      },
+      {
+        path: "portfolio",
+        name: "Kaller",
+        component: homepage
+      },
+      {
+        path: "login",
+        name: "Kaller",
+        component: login
+      },
+      {
+        path: "locations/:location",
+        name: "Location",
+        component: location,
+      },
+      {
+        path: "locations",
+        name: "Locations",
+        component: locations,
+      },
+      {
+        path: "contact",
+        name: "Contacts",
+        component: contact,
+      },
     ]
-  },
-  {
-    path: "/",
-    name: "Kaller",
-    component: homepage
-  },
-  {
-    path: "/login",
-    name: "Kaller",
-    component: login
-  },
-  {
-    path: "/locations/:location",
-    name: "Location",
-    component: location,
-  },
-  {
-    path: "/locations",
-    name: "Locations",
-    component: locations,
-  },
-  {
-    path: "/contact",
-    name: "Contacts",
-    component: contact,
-  },
+  }
 ];
 
 const router = new VueRouter({

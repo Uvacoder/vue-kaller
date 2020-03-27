@@ -58,7 +58,7 @@
           <v-hover v-slot:default="{ hover }">
             <v-card
               :class="`elevation-${hover ? 24 : 0}`"
-              @click="$router.push('/locations/' + location.name.unSwedify())"
+              :to="'/' + $i18n.locale + '/locations/' + location.name.replace(' ','')"
             >
               <v-img
                 :aspect-ratio="7/4"
@@ -121,7 +121,9 @@ export default {
     locationSearched() {
       console.log("LOCATION SELECTED", this.selectedLocation);
       if (this.selectedLocation) {
-        this.$router.push("/locations/" + this.selectedLocation);
+        this.$router.push(
+          "/" + this.$i18n.locale + "/locations/" + this.selectedLocation
+        );
       }
     },
     sortByRating() {

@@ -5,11 +5,16 @@
         <div class="d-flex align-center justify-center ml-3">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-btn @click="$router.push('/locations/')" height="48px" class="mr-2 pa-0" v-on="on">
+              <v-btn
+                @click="$router.push('/' + $i18n.locale + '/locations/')"
+                height="48px"
+                class="mr-2 pa-0"
+                v-on="on"
+              >
                 <v-icon class="pa-0">mdi-arrow-left</v-icon>
               </v-btn>
             </template>
-            <span>Go back to locations</span>
+            <span>Go back to locations skrrr</span>
           </v-tooltip>
 
           <v-tooltip bottom>
@@ -55,7 +60,7 @@
                   class="pa-1 ma-2"
                   v-for="(photo, index) in location.photos"
                   :key="index"
-                  @click="$router.push('/photography/' + photo)"
+                  :to="'/' + $i18n.locale + '/photography/' + photo"
                 >
                   <v-img :src="'https://kallers.se/images/2k/'+photo"></v-img>
                 </v-card>
@@ -148,7 +153,12 @@ export default {
     },
     locationSearched() {
       if (this.location) {
-        this.$router.push("/locations/" + this.searchedLocation);
+        this.$router.push(
+          "/" +
+            this.$i18n.locale +
+            "/locations/" +
+            this.searchedLocation.replace(" ", "")
+        );
       }
     },
     openInMaps() {

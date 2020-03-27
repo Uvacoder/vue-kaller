@@ -11,8 +11,15 @@
               :height="$vuetify.breakpoint.lgAndUp ? windowSize.y*0.8/2 : windowSize.y*0.84/3"
             >
               <div class="d-flex align-center justify-center flex-column fill-height" color="white">
-                <p class="display-2 font-weight-light white--text text-center">Landscape Photography</p>
-                <v-btn x-large to="/photography" outlined color="white">Explore</v-btn>
+                <p
+                  class="display-2 font-weight-light white--text text-center"
+                >{{$t('home.landscape.name')}}</p>
+                <v-btn
+                  x-large
+                  :to="'/'+$i18n.locale+'/photography'"
+                  outlined
+                  color="white"
+                >{{$t('home.landscape.action')}}</v-btn>
               </div>
             </v-img>
           </v-card>
@@ -25,7 +32,12 @@
             >
               <div class="d-flex align-center justify-center flex-column fill-height" color="white">
                 <p class="display-2 font-weight-light white--text">Martin Kaller</p>
-                <v-btn x-large to="/contact" outlined color="white">About me</v-btn>
+                <v-btn
+                  x-large
+                  :to="'/'+$i18n.locale+'/contact'"
+                  outlined
+                  color="white"
+                >{{$t('home.contact.action')}}</v-btn>
               </div>
             </v-img>
           </v-card>
@@ -39,8 +51,13 @@
               :height="$vuetify.breakpoint.lgAndUp ? windowSize.y*0.8+4 : windowSize.y*0.84/3"
             >
               <div class="d-flex align-center justify-center flex-column fill-height" color="white">
-                <p class="display-2 font-weight-light white--text">Locations</p>
-                <v-btn x-large to="/locations" outlined color="white">Discover</v-btn>
+                <p class="display-2 font-weight-light white--text">{{$t('home.locations.name')}}</p>
+                <v-btn
+                  x-large
+                  :to="'/'+$i18n.locale+'/locations'"
+                  outlined
+                  color="white"
+                >{{$t('home.locations.action')}}</v-btn>
               </div>
             </v-img>
           </v-card>

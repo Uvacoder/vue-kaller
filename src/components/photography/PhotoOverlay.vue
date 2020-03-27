@@ -118,12 +118,16 @@ export default {
     },
     hideOverlay() {
       this.$emit("close", false);
-      document.exitFullscreen();
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      }
     },
     wideOverlay() {
       if (this.fullscreenIcon !== "mdi-fullscreen") {
         this.fullscreenIcon = "mdi-fullscreen";
-        document.exitFullscreen();
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
         this.$emit("fullscreen", false);
       } else {
         this.fullscreenIcon = "mdi-fullscreen-exit";

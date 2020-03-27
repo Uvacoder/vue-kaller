@@ -1,10 +1,10 @@
 import hostMixin from './hostMixin'
 
-const postJSONRequest = async function (data, api) {
+const jsonRequest = async function (data, api, method = 'POST') {
     console.log('JSON request to ' + hostMixin.host + "/api/" + api);
     return new Promise(async (resolve, reject) => {
         const response = await fetch(hostMixin.host + "/api/" + api, {
-            method: "POST",
+            method,
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
@@ -39,9 +39,12 @@ const postFormRequest = async (formData,api) => {
 
 export default {
     post(data, api) {
-        return postJSONRequest(data, api);
+        return jsonRequest(data, api);
     },
     upload(form,api) {
         return postFormRequest(form,api);
+    },
+    get(data, api) {
+        return jsonRequest(data, api, 'GET');
     }
 }
