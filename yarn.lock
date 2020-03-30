@@ -881,11 +881,6 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@kazupon/vue-i18n-loader@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@kazupon/vue-i18n-loader/-/vue-i18n-loader-0.3.0.tgz#e068de2d75d891275814ae28ad1fcaf1b537694f"
-  integrity sha512-M2280E9PMxetu6mOdtyh1d6Dif7LwH4gvxD2dgsu7HOyzR26AUNok8DxZ1Y5YAexJvPfbBXC75Llui2myO05Hg==
-
 "@mdi/font@^4.9.95":
   version "4.9.95"
   resolved "https://registry.yarnpkg.com/@mdi/font/-/font-4.9.95.tgz#00ed2ffe289c9230f146e74559c07542d3f4475a"
@@ -11128,11 +11123,6 @@ vue-i18n@^8.0.0:
   version "8.15.6"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.15.6.tgz#20060bf3a741683ebbe3f6db2d6905d8167e4c32"
   integrity sha512-Pf70TxuG4uqCvAZ5KfD9B+wHAU3GWb2rhdVFp63OfcYGIl41x3GT1bJWUUou3rFct4KZs+Wo3nC9hzKRI2pyYA==
-
-vue-i18n@^8.15.7:
-  version "8.15.7"
-  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.15.7.tgz#f6d79bdddd1562ba5d79232130465eec90e52e9e"
-  integrity sha512-0k6MySMjEe5rejFzWky2JCP0y006RZ0fBHAGGphKolF/l3LaSOaKuNkKRLEev1FL3E1ebInV1jGoNiJm15pc+g==
 
 vue-jscodeshift-adapter@^2.0.2:
   version "2.0.2"

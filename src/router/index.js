@@ -9,10 +9,10 @@ import isAuth from "../services/authenticate";
 import locations from "../components/locations/locations.vue";
 import location from "../components/locations/location.vue";
 import contact from "../components/contact/contact.vue";
+import prints from "../components/prints/print.vue";
 import i18n from '../i18n.js';
 
 console.log(i18n)
-
 
 Vue.use(VueRouter);
 
@@ -40,6 +40,10 @@ const routes = [
   {
     path: '/contact',
     redirect: `/${i18n.locale}/contact`
+  },
+  {
+    path: '/prints',
+    redirect: `/${i18n.locale}/prints`
   },
   {
     path: '/:lang',
@@ -107,6 +111,11 @@ const routes = [
         name: "Contacts",
         component: contact,
       },
+      {
+        path: "prints",
+        name: "Prints",
+        component: prints,
+      },
     ]
   }
 ];
@@ -117,4 +126,26 @@ const router = new VueRouter({
   mode: "history"
 });
 
+
+
 export default router;
+
+router.beforeEach((to, from, next) => {
+
+  // use the language from the routing param or default language
+  let language = to.params.lang;
+  if (!language) {
+    language = 'en'
+    if (localStorage.lang) {
+      // this.$i18n.locale = localStorage.lang;
+      language = localStorage.lang;
+    }
+  }
+  
+  
+
+  // set the current language for i18n.
+  i18n.locale = language
+  console.log('LANGUAGE SET TO ',i18n.locale)
+  next()
+})

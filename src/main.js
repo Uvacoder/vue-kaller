@@ -14,19 +14,6 @@ Vue.use(VueMasonry)
 
 Vue.config.productionTip = false
 
-router.beforeEach((to, from, next) => {
-
-  // use the language from the routing param or default language
-  let language = to.params.lang;
-  if (!language) {
-    language = 'en'
-  }
-
-  // set the current language for i18n.
-  i18n.locale = language
-  next()
-})
-
 Vue.prototype.$host = hostMixin.host;
 
 if (!localStorage.auth) localStorage.auth = 'none';

@@ -98,7 +98,7 @@
         <v-card-text>{{$t('legal')}}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="languageDialog = false">Save and agree</v-btn>
+          <v-btn color="blue darken-1" text @click="save()">Save and agree</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -173,6 +173,10 @@ export default {
         to: "/contact"
       },
       {
+        name: "navs.prints",
+        to: "/prints"
+      },
+      {
         name: "navs.dashboard",
         to: "/admin"
       }
@@ -194,21 +198,26 @@ export default {
       console.log("Navigatorshare not supported");
     },
     save() {
-      console.log(this.$route);
+      let route = this.$route;
+      let lang = this.$i18n.locale;
+      route.params.lang = lang;
+      localStorage.lang = lang;
+      if (!route.path.includes(lang)) this.$router.push(route);
+      this.languageDialog = false;
     }
   },
   mounted() {
     this.start = true;
     if (localStorage.lang) {
-      this.$i18n.locale = localStorage.lang;
+      // this.$i18n.locale = localStorage.lang;
       this.languageSelected = this.$i18n.locale;
     } else this.languageDialog = true;
+    console.log(this.$i18n.locale);
   },
   watch: {
     languageSelected: {
       handler: function(val, oldVal) {
         this.$i18n.locale = val;
-        localStorage.lang = val;
       }
     }
   }
