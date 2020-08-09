@@ -3,7 +3,7 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
-import vuetify from './plugins/vuetify';
+import vuetify from './plugins/vuetify'
 import hostMixin from './services/hostMixin'
 import VueClipboard from 'vue-clipboard2'
 import VueMasonry from 'vue-masonry-css'

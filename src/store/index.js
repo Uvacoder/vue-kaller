@@ -9,7 +9,7 @@ const pro = "https://kallers.se";
 
 export default new Vuex.Store({
   state: {
-    host: '',
+    host: dev,
     photos: [],
     windowSize: {
       x: 0,
@@ -34,10 +34,10 @@ export default new Vuex.Store({
       if (localStorage.photos) {
         commit('SET_PHOTOS', JSON.parse(localStorage.photos));
       }
-      const photos = await api.post(null, 'photos');
-      console.log('Photos', photos);
-      localStorage.photos = JSON.stringify(photos);
-      commit('SET_PHOTOS', photos);
+      const response = await api.post(null, 'photos');
+      console.log('Photos', response.data);
+      localStorage.photos = JSON.stringify(response.data);
+      commit('SET_PHOTOS', response.data);
     },
     getWindowSize({ commit }) {
       const size = { x: window.innerWidth, y: window.innerHeight };
@@ -321,12 +321,12 @@ export default new Vuex.Store({
             "_MK29999.jpg",
             "_MK29225.jpg",
             "_MK24882.jpg",
-      ],
-      youtube: [
+          ],
+          youtube: [
             'https://www.youtube.com/embed/Z6Wlg3yt1u0'
           ],
           paragrafs: [
-        'Ågelsjön är ett av de mest välbesökta naturreservaten i närheten av Norrköping. Här kan man vandra, paddla kanot, bada och klättra. Branterna längs Ågelsjön är välbekanta hos klättrare över hela landet. För den som vill fiska finns bland annat gädda, abborre och lake i sjön men glöm inte att köpa fiskekort.'
+            'Ågelsjön är ett av de mest välbesökta naturreservaten i närheten av Norrköping. Här kan man vandra, paddla kanot, bada och klättra. Branterna längs Ågelsjön är välbekanta hos klättrare över hela landet. För den som vill fiska finns bland annat gädda, abborre och lake i sjön men glöm inte att köpa fiskekort.'
           ],
           history: [
             '28th February 2020',
@@ -334,7 +334,7 @@ export default new Vuex.Store({
             '12th October 2019'
           ],
         }
-        
+
       ];
       console.log('locations set')
       commit('SET_LOCATIONS', locations);

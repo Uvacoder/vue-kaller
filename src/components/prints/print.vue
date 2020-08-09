@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-6 full">
+  <v-container class="mt-6">
     <v-row>
       <v-col cols="12" lg="8">
         <v-card class="mb-4" light v-if="$vuetify.breakpoint.mdAndDown">
@@ -7,25 +7,106 @@
         </v-card>
         <v-stepper v-model="e1" light>
           <v-stepper-header>
-            <v-stepper-step :complete="e1 > 1" step="1" editable>Choose images</v-stepper-step>
+            <v-stepper-step
+              :complete="e1 > 1"
+              step="1"
+              editable
+              edit-icon="mdi-check"
+            >{{ $t('prints.steps[0]') }}</v-stepper-step>
+            <v-divider></v-divider>
+
+            <v-stepper-step
+              :complete="e1 > 2"
+              step="2"
+              editable
+              edit-icon="mdi-check"
+            >{{ $t('prints.steps[1]') }}</v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step :complete="e1 > 2" step="2" editable>Choose sizes</v-stepper-step>
+            <v-stepper-step
+              :complete="e1 > 3"
+              step="3"
+              edit-icon="mdi-check"
+            >{{ $t('prints.steps[2]') }}</v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="3" editable>Fill in your information</v-stepper-step>
+            <v-stepper-step step="4" editable edit-icon="mdi-check">{{ $t('prints.steps[3]') }}</v-stepper-step>
           </v-stepper-header>
+          <v-btn
+            block
+            color="primary"
+            @click="continueToCart()"
+            v-show="e1==2"
+            v-if="$vuetify.breakpoint.mdAndDown"
+            :disabled="total === 0"
+          >Choose sizes and frames</v-btn>
+          <v-btn
+            block
+            color="primary"
+            @click="e1=2"
+            v-show="e1==1"
+            v-if="$vuetify.breakpoint.mdAndDown"
+          >Välj bilder</v-btn>
           <v-stepper-items>
-            <v-stepper-content step="1" class="grey darken-3">
-              <v-item-group multiple :value="value">
+            <v-stepper-content step="1">
+              <v-row>
+                <v-col>
+                  <p class="display-1">{{ $t('prints.title')}}</p>
+                  <p class="body-1">{{ $t('prints.body')}}</p>
+                  <v-alert
+                    v-for="warning in $t('prints.warnings')"
+                    v-bind:key="warning.text"
+                    dense
+                    text
+                    :type="warning.status"
+                  >{{ warning.text }}</v-alert>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col class="d-flex flex-column" cols="12" md="4">
+                  <v-icon size="60" color="red">mdi-image</v-icon>
+                  <p class="text-center headline text-center ma-0">{{ $t('prints.howto[0].title')}}</p>
+                  <p class="body-1 ma-0 pl-1">{{ $t('prints.howto[0].body')}}</p>
+                </v-col>
+                <v-col class="d-flex flex-column" cols="12" md="4">
+                  <v-icon size="60" color="success">mdi-aspect-ratio</v-icon>
+                  <p class="headline text-center ma-0">{{ $t('prints.howto[1].title')}}</p>
+                  <p class="body-1 ma-0 pl-1">{{ $t('prints.howto[1].body')}}</p>
+                </v-col>
+                <v-col class="d-flex flex-column" cols="12" md="4">
+                  <v-icon size="60" color="primary">mdi-account</v-icon>
+                  <p class="headline ma-0 text-center">{{ $t('prints.howto[2].title')}}</p>
+                  <p class="body-1 ma-0 pl-1">{{ $t('prints.howto[2].body')}}</p>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" md="4" class="pa-0">
+                  <v-img src="https://kallers.se/images/assets/print1.jpg" />
+                </v-col>
+                <v-col cols="12" md="4" class="pa-0">
+                  <v-img src="https://kallers.se/images/assets/print2.jpg" />
+                </v-col>
+                <v-col cols="12" md="4" class="pa-0">
+                  <v-img src="https://kallers.se/images/assets/print3.jpg" />
+                </v-col>
+              </v-row>
+              <v-btn color="primary" @click="e1 = 2">{{$t('continue')}}</v-btn>
+
+              <v-btn text @click="e1=1">{{$t('cancel')}}</v-btn>
+            </v-stepper-content>
+
+            <v-stepper-content step="2" class="pa-2">
+              <v-item-group multiple :value="value" class="grey darken-3 px-2 mb-2">
                 <v-row>
                   <v-col
                     v-for="photo in photos"
                     :key="photo.id"
-                    cols="3"
-                    md="2"
+                    cols="4"
+                    md="3"
+                    lg="2"
                     v-if="photo.width/photo.height < 1"
                   >
                     <v-item v-slot:default="{ active }" :value="photo">
@@ -36,7 +117,7 @@
                         light
                       >
                         <v-img
-                          :src="'https://kallers.se/'+photo.path"
+                          :src="$host+photo.low_path"
                           class="text-right pa-0"
                           :gradient="active ? 'to top right, rgba(255,255,255,0), rgba(255,255,255,0), rgba(255,255,255,0), rgba(0,0,0,.8)' : 'to top right, rgba(255,255,255,.0), rgba(255,255,255,.0)'"
                           :aspect-ratio="210/297"
@@ -51,12 +132,12 @@
                 </v-row>
               </v-item-group>
 
-              <v-btn color="primary" @click="e1 = 2">Continue</v-btn>
+              <v-btn color="primary" @click="e1 = 3">{{$t('continue')}}</v-btn>
 
-              <v-btn text @click="e1=1">Cancel</v-btn>
+              <v-btn text @click="e1=1">{{$t('cancel')}}</v-btn>
             </v-stepper-content>
 
-            <v-stepper-content step="2">
+            <v-stepper-content step="3">
               <v-card light>
                 <v-simple-table class="my-2">
                   <template v-slot:default>
@@ -72,7 +153,7 @@
                       <tr v-for="item in shoppingcart" :key="item.photo.id">
                         <td>
                           <v-img
-                            :src="'https://kallers.se/'+item.photo.path"
+                            :src="$host+item.photo.low_path"
                             :aspect-ratio="210/297"
                             max-width="50"
                           ></v-img>
@@ -92,17 +173,86 @@
                 </v-simple-table>
               </v-card>
               <p class="display-1 text-right">Total: {{total}} kr</p>
-              <v-btn color="primary" @click="e1 = 3">Continue</v-btn>
+              <v-btn color="primary" @click="e1 = 4">{{$t('continue')}}</v-btn>
 
-              <v-btn text @click="e1=1">Cancel</v-btn>
+              <v-btn text @click="e1=1">{{$t('cancel')}}</v-btn>
             </v-stepper-content>
 
-            <v-stepper-content step="3">
-              <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+            <v-stepper-content step="4">
+              <v-card flat>
+                <!-- <v-card-title>
+                  <span class="headline">Request</span>
+                </v-card-title>-->
+                <v-card-text>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Namn"
+                        autocomplete="name"
+                        required
+                        v-model="orderinfo.name"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Address"
+                        required
+                        v-model="orderinfo.address"
+                        autocomplete="shipping street-address"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Postnummer"
+                        hint="example of helper text only on focus"
+                        autocomplete="shipping postal-code"
+                        v-model="orderinfo.zip"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        label="Stad"
+                        required
+                        v-model="orderinfo.city"
+                        autocomplete="shipping locality"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Phone number*"
+                        required
+                        v-model="orderinfo.phone"
+                        autocomplete="tel"
+                      >></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Email*"
+                        required
+                        v-model="orderinfo.email"
+                        autocomplete="email"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <v-text-field
+                        label="Kommentar"
+                        hint="Ifall du vill lägga till något"
+                        persistent-hint
+                        required
+                        v-model="orderinfo.comment"
+                      ></v-text-field>
+                      <br />
+                      <v-alert
+                        dense
+                        text
+                        type="warning"
+                      >Frakt kan tillkomma ifall du är utanför Linköping</v-alert>
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+              </v-card>
 
-              <v-btn color="primary" @click="e1 = 1">Continue</v-btn>
-
-              <v-btn text @click="e1=2">Cancel</v-btn>
+              <v-btn color="primary" block @click="makeOrder">{{$t('continue')}}</v-btn>
             </v-stepper-content>
           </v-stepper-items>
         </v-stepper>
@@ -115,10 +265,10 @@
       </v-col>-->
       <v-col>
         <v-card class="mb-4" light v-if="!$vuetify.breakpoint.mdAndDown">
-          <pricetable :prices="prices"></pricetable>
+          <pricetable :expand="0" :prices="prices"></pricetable>
         </v-card>
         <v-card light v-if="!$vuetify.breakpoint.mdAndDown">
-          <p class="display-3">Kundvagn</p>
+          <p class="display-3 ma-3">{{ $t('prints.cart') }}</p>
           <v-simple-table class="my-2">
             <template v-slot:default>
               <thead>
@@ -132,7 +282,7 @@
                 <tr v-for="item in shoppingcart" :key="item.photo.id">
                   <td>
                     <v-img
-                      :src="'https://kallers.se/'+item.photo.path"
+                      :src="$host+item.photo.low_path"
                       :aspect-ratio="210/297"
                       max-width="50"
                     ></v-img>
@@ -144,7 +294,7 @@
               </tbody>
             </template>
           </v-simple-table>
-          <v-btn block color="primary" @click="continueToCart()">Choose sizes and frames</v-btn>
+          <v-btn block color="primary" @click="continueToCart()">{{ $t('prints.continue[0]') }}</v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -171,7 +321,7 @@
               <tr v-for="item in shoppingcart" :key="item.photo.id">
                 <td>
                   <v-img
-                    :src="'https://kallers.se/'+item.photo.path"
+                    :src="$host+item.photo.low_path"
                     :aspect-ratio="210/297"
                     max-width="50"
                   ></v-img>
@@ -184,6 +334,13 @@
           </template>
         </v-simple-table>
         <v-btn block color="primary" @click="continueToCart()">Choose sizes and frames</v-btn>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="orderdialog" max-width="600px">
+      <v-card class="pa-3">
+        <p>Kopiera in detta i ett mail till fotograf@kallers.se</p>
+        <v-textarea :value="order" auto-grow filled readonly></v-textarea>
       </v-card>
     </v-dialog>
   </v-container>
@@ -199,13 +356,8 @@ export default {
     pricetable
   },
   data: () => ({
-    types: ["cards", "images"],
-    type: "cards",
-    mandatory: false,
     shoppingDialog: false,
-    multiple: true,
-    gradient: true,
-    e1: "",
+    e1: 1,
     value: [],
     prices: [
       {
@@ -241,7 +393,18 @@ export default {
     ],
     pricelist: [],
     shoppingcart: [],
-    total: 0
+    total: 0,
+    orderdialog: false,
+    order: "Hello this is order",
+    orderinfo: {
+      name: "",
+      address: "",
+      zip: "",
+      city: "",
+      email: "",
+      comment: "",
+      phone: ""
+    }
   }),
   computed: {
     ...mapState(["photos", "windowSize"])
@@ -275,7 +438,7 @@ export default {
       this.calculateCart();
     },
     continueToCart() {
-      this.e1 = 2;
+      this.e1 = 3;
       this.createCart();
       this.shoppingDialog = false;
     },
@@ -292,12 +455,33 @@ export default {
       this.shoppingcart.forEach(item => {
         this.total += Math.floor(item.price);
       });
+    },
+    makeOrder() {
+      this.order = `Kontakt
+      ${this.orderinfo.name}
+      ${this.orderinfo.address}, ${this.orderinfo.zip}, ${this.orderinfo.city}
+      ${this.orderinfo.phone}
+      ${this.orderinfo.email}
+      ${this.orderinfo.comment}
+
+Bilder`;
+      this.shoppingcart.forEach(item => {
+        this.order += `
+      ${item.photo.filename} - ${item.value}`;
+      });
+      this.order += `
+      
+Totalt: ${this.total} kr
+      `;
+
+      this.orderdialog = true;
     }
   },
   mounted() {
     this.prices.map(object => {
       this.pricelist.push(object.name + ", " + object.price + " kr");
     });
+    this.pricelist.push("Annan storlek");
   },
   watch: {
     shoppingcart: {
@@ -321,9 +505,5 @@ export default {
 <style scoped>
 .padding {
   padding: 2px;
-}
-
-.full {
-  min-height: 100vh;
 }
 </style>

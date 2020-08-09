@@ -5,8 +5,8 @@
   >
     <v-img
       v-show="!$vuetify.breakpoint.smAndDown"
-      :src="$host + photo.path"
-      :lazy-src="$host + photo.prepath"
+      :src="$host + photo.low_path"
+      :lazy-src="$host + photo.pre_path"
       @click="click(photo)"
       :aspect-ratio="photo.width/photo.height"
       :alt="`Photograph ${photo.filename} was taken ${new Date(photo.date*1000).toLocaleDateString()} with ${photo.aperture} and ${photo.shutterspeed}s`"
@@ -22,9 +22,9 @@
     </v-img>
     <v-img
       v-show="$vuetify.breakpoint.smAndDown"
-      :src="$host + photo.mobilepath"
+      :src="$host + photo.medium_path"
       :class="{'desktopPhoto': large }"
-      :lazy-src="$host + photo.prepath"
+      :lazy-src="$host + photo.pre_path"
       :aspect-ratio="photo.width/photo.height"
       @click="click(photo)"
     >

@@ -42,5 +42,43 @@
       "action": "Upptäck"
     }
   },
-  "legal": "kallers.se använder html5 localstorage, genom att spara godkänner du till att låte denna webbplats använda localstorage"
+  "legal": "kallers.se använder html5 localstorage, genom att spara godkänner du till att låte denna webbplats använda localstorage",
+  "prints": {
+    "continue": [
+      "Välj ram och storlek"
+    ],
+    "cart": "Kundvagn",
+    "steps": [
+      "Info",
+      "Välj bilder",
+      "Välj ram och storlek",
+      "Fyll i uppgifter"
+    ],
+    "pricetable": "Priser för storlek och ram",
+    "howto": [
+      {
+        "title": "Välj de bilder du vill ha",
+        "body": "Klicka i bilderna du vill, som standard är bilderna valda i A3 med ram vilket är det jag rekommenderar"
+      },
+      {
+        "title": "Välj storlek och ram",
+        "body": "Klicka i bilderna du vill, som standard är bilderna valda i A3 med ram vilket är det jag rekommenderar"
+      },
+      {
+        "title": "Fyll i dina uppgifter",
+        "body": "Uppgifterna skickas till mig och jag kommer kontakta dig. Är du inom Linköping levererar jag personligt till dig"
+      }
+    ],
+    "title": "Vad härligt att du vill köpa bilder!",
+    "body": "Mina bilder gör sig ofta bäst på papper. Det blir självklart ännu bättre inramat dessutom. Jag rekommenderar bildstorleken A3 med svart ram och passepartout. I storleken A3 så skrivs bilderna lokalt ut i Linköping och blir väldigt fin kvalité. Priset för detta är 300kr. Kolla in pristabellen för andra storlekar! Finns storleken inte med? Skriv vilken storlek du vill ha i kommentars delen vid ifyllning av uppgifter så kontaktar jag dig och erbjuder ett pris för denna storlek.",
+    "warnings": [
+      {
+        "text": "Detta är ingen riktig webbshopp, när du fyllt i uppgifterna skickas de till mig och jag kommer ta kontakt med dig. Betalningen sköts senare",
+        "status": "warning"
+      }
+    ]
+
+  },
+  "continue": "Fortsätt",
+  "cancel": "Avbryt"
 }

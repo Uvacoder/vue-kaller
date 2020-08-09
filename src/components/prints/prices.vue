@@ -1,7 +1,7 @@
 <template>
-  <v-expansion-panels>
+  <v-expansion-panels :value="expand">
     <v-expansion-panel>
-      <v-expansion-panel-header color="success">Sizes and prices</v-expansion-panel-header>
+      <v-expansion-panel-header color="success">{{$t('prints.pricetable')}}</v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-simple-table>
           <template v-slot:default>
@@ -15,8 +15,8 @@
             <tbody>
               <tr v-for="alt in prices" :key="alt.name">
                 <td>{{alt.name}}</td>
-                <td>{{ alt.size }}</td>
-                <td>{{ alt.price }}</td>
+                <td>{{ alt.size }} cm</td>
+                <td>{{ alt.price }} kr</td>
               </tr>
             </tbody>
           </template>
@@ -29,7 +29,8 @@
 <script>
 export default {
   props: {
-    prices: Array
+    prices: Array,
+    expand: Number
   }
 };
 </script>

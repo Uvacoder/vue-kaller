@@ -46,7 +46,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-row :class="'justify-end'">
+      <v-row>
         <v-col
           :cols="12"
           :md="6"

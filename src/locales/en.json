@@ -42,5 +42,43 @@
       "action": "Explore"
     }
   },
-  "legal": "kallers.se use html5 localstorage, by saving location you also consent to let this website use localstorage"
+  "legal": "kallers.se use html5 localstorage, by saving location you also consent to let this website use localstorage",
+  "prints": {
+    "continue": [
+      "Välj ram och storlek"
+    ],
+    "cart": "Shopping cart",
+    "steps": [
+      "Info",
+      "Choose photos",
+      "Choose frame and size",
+      "Fill in your information"
+    ],
+    "pricetable": "Prices for frame and size",
+    "howto": [
+      {
+        "title": "Choose the images you want",
+        "body": "Click in the pictures you want, by default the pictures are selected in A3 with frame which is what I recommend"
+      },
+      {
+        "title": "Choose size and frame",
+        "body": "The price is governed by what size you choose. Frame can be added in white or black. By default, the frame is larger than pictured with a passport layout."
+      },
+      {
+        "title": "Fyll i dina uppgifter",
+        "body": "The information is sent to me and I will contact you. If you are in Linköping, I personally deliver to you"
+      }
+    ],
+    "title": "Welcome to my print shop",
+    "body": "My pictures often work best on paper. Of course, it gets even better framed in addition. I recommend the image size A3 with black frame and matte layout. In size A3, the images are printed locally in Linköping and become very fine quality. The price for this is 300 SEK. Check out the price table for other sizes! Is the size not included? Write what size you want in the comments section when filling in information and I will contact you and offer a price for this size.",
+    "warnings": [
+      {
+        "text": "This is not a real webshop, when you fill in the information they are sent to me and I will contact you. The payment is taken care of later",
+        "status": "warning"
+      }
+    ]
+
+  },
+  "continue": "Continue",
+  "cancel": "Cancel"
 }

@@ -22,8 +22,8 @@
     <div class="d-inline" :style="'width: '+this.overlayProp.width+'px'">
       <div class="box">
         <v-img
-          :lazy-src="$host + overlayProp.photo.prepath"
-          :src="$host + overlayProp.photo.highpath"
+          :lazy-src="$host + overlayProp.photo.pre_path"
+          :src="$host + overlayProp.photo.high_path"
           :height="overlayProp.height"
           :width="overlayProp.width"
           :key="overlayProp.photo.id"

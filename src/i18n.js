@@ -37,7 +37,7 @@ const loadedLocales = {};
 
 export const loadLocaleAsync = async (locale) => {
   let messages = loadedLocales[locale];
-    const res = await axios.post(`https://kaller.test/api/locales/${locale}`);
+    const res = await axios.get(`https://kallers.se/locales/${locale}.json`);
     messages = res.data;
     console.log('FETCHING LOCALS',locale,messages)
     loadedLocales[locale] = messages;
@@ -45,5 +45,5 @@ export const loadLocaleAsync = async (locale) => {
 };
 
 //Fetches locales from API
-// loadLocaleAsync('sv');
-// loadLocaleAsync('en');
+loadLocaleAsync('sv');
+loadLocaleAsync('en');

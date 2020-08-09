@@ -32,19 +32,6 @@
       </navigator-share>
     </v-app-bar>
     <v-navigation-drawer app v-model="drawer" temporary dark>
-      <!-- <v-toolbar-items class="navDrawerTab">
-        <v-tabs v-model="tab" vertical class="navDrawerTab" style="width: 100%">
-          <v-tab
-            v-for="nav in navs"
-            :to="nav.to"
-            :key="nav.to"
-            class="white--text text-left navDrawerTab"
-            style="width: 100%"
-          >
-            <span class="text-left headline">{{nav.name}}</span>
-          </v-tab>
-        </v-tabs>
-      </v-toolbar-items>-->
       <v-list nav>
         <v-list-item-group>
           <v-list-item v-for="nav in navs" :to="'/'+$i18n.locale+nav.to" :key="nav.to">
@@ -52,7 +39,11 @@
           </v-list-item>
         </v-list-item-group>
       </v-list>
-
+      <template v-slot:append>
+        <div class="pa-2">
+          <v-btn color="primary" block dark @click="languageDialog = true">Change language</v-btn>
+        </div>
+      </template>
       <!-- <template v-slot:append>
         <div class="pa-10">
           <v-btn block>Logout</v-btn>
@@ -60,14 +51,16 @@
       </template>-->
     </v-navigation-drawer>
     <!-- <div class="navspacer"></div> -->
-    <transition name="fade" mode="out-in">
-      <keep-alive>
-        <router-view class="pt-12" />
-      </keep-alive>
-    </transition>
-    <v-footer dark padless class="mt-12 d-flex justify-center">
-      <v-card flat tile class="grey darken-4 white--text pb-1 text-center">
-        <v-card-text class="pb-2">
+    <v-content>
+      <transition name="fade" mode="out-in">
+        <keep-alive>
+          <router-view class="pt-12 full" />
+        </keep-alive>
+      </transition>
+    </v-content>
+    <v-footer dark padless class="d-flex justify-center">
+      <v-card flat tile class="grey darken-4 white--text pb-1">
+        <v-card-text class="pb-2 text-center">
           <v-tooltip top v-for="icon in icons" :key="icon.link">
             <template v-slot:activator="{ on }">
               <v-btn class="mx-4 white--text" :href="icon.link" target="_blank" icon v-on="on">
@@ -80,28 +73,27 @@
 
         <v-card-text class="white--text pt-0 pb-9">{{$t("footer.about")}}</v-card-text>
       </v-card>
+      <v-dialog v-model="languageDialog" scrollable max-width="300px">
+        <template v-slot:activator="{ on }">
+          <v-btn color="primary" block dark tile v-on="on">Change language</v-btn>
+        </template>
+        <v-card style="min-height:400px">
+          <v-card-title>Select language</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-radio-group v-model="languageSelected" column>
+              <v-radio label="English" value="en"></v-radio>
+              <v-radio label="Svenska" value="sv"></v-radio>
+            </v-radio-group>
+          </v-card-text>
+          <v-card-text>{{$t('legal')}}</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="save()">Save and agree</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-footer>
-
-    <v-dialog v-model="languageDialog" scrollable max-width="300px">
-      <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Change language</v-btn>
-      </template>
-      <v-card style="min-height:400px">
-        <v-card-title>Select language</v-card-title>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-radio-group v-model="languageSelected" column>
-            <v-radio label="English" value="en"></v-radio>
-            <v-radio label="Svenska" value="sv"></v-radio>
-          </v-radio-group>
-        </v-card-text>
-        <v-card-text>{{$t('legal')}}</v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="save()">Save and agree</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-app>
 </template>
 
@@ -198,6 +190,7 @@ export default {
       console.log("Navigatorshare not supported");
     },
     save() {
+      this.$i18n.locale = this.languageSelected;
       let route = this.$route;
       let lang = this.$i18n.locale;
       route.params.lang = lang;
@@ -250,6 +243,7 @@ body {
 }
 #app {
   background-color: #383838;
+  min-height: 100vh;
 }
 
 .fade-enter-active,
