@@ -118,7 +118,7 @@ export default {
     photo: Object
   },
   computed: {
-    ...mapState(["photos", "windowSize"])
+    ...mapState(["photos", "windowSize","preparedPhotos"])
   },
   methods: {
     showOverlay(photo = this.overlayProp.photo, active = true, router = true) {
@@ -225,27 +225,27 @@ export default {
       this.columns.size = 12 / cols;
       console.log(this.columns.size);
 
-      const photos = this.photos;
-      let splitPhotos = [];
-      let heights = [];
+      // const photos = this.photos;
+      // let splitPhotos = [];
+      // let heights = [];
 
-      //adds one photo in each cols amount of arryas
-      for (let i = 0; i < cols; i++) {
-        splitPhotos[i] = [photos[i]];
-        heights[i] = photos[i].height / photos[i].width;
-      }
+      // //adds one photo in each cols amount of arryas
+      // for (let i = 0; i < cols; i++) {
+      //   splitPhotos[i] = [photos[i]];
+      //   heights[i] = photos[i].height / photos[i].width;
+      // }
 
-      //checks which column contains the images with the least amount of height and ads one more imahe to that array
-      this.photos.forEach(async (photo, index) => {
-        if (index > cols - 1) {
-          const temp = Math.min(...heights);
-          const key = heights.indexOf(temp);
-          splitPhotos[key].push(photo);
-          heights[key] += photo.height / photo.width;
-        }
-      });
-      console.log("Split photos", splitPhotos);
-      this.splitPhotos = splitPhotos;
+      // //checks which column contains the images with the least amount of height and ads one more imahe to that array
+      // this.photos.forEach(async (photo, index) => {
+      //   if (index > cols - 1) {
+      //     const temp = Math.min(...heights);
+      //     const key = heights.indexOf(temp);
+      //     splitPhotos[key].push(photo);
+      //     heights[key] += photo.height / photo.width;
+      //   }
+      // });
+      // console.log("Split photos", splitPhotos);
+      this.splitPhotos = this.preparedPhotos[cols-1];
       if (Math.max(...this.columns.allowedSizes) === this.columns.amount) {
         this.text = false;
       } else this.text = true;

@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     host: dev,
     photos: [],
+    preparedPhotos: [],
     windowSize: {
       x: 0,
       y: 0
@@ -20,6 +21,9 @@ export default new Vuex.Store({
   mutations: {
     SET_PHOTOS(state, photos) {
       state.photos = photos;
+    },
+    SET_PREPAREDPHOTOS(state, preparedphotos) {
+      state.preparedPhotos = preparedphotos;
     },
     SET_WINDOW(state, window) {
       console.log(window.x);
@@ -38,6 +42,15 @@ export default new Vuex.Store({
       console.log('Photos', response.data);
       localStorage.photos = JSON.stringify(response.data);
       commit('SET_PHOTOS', response.data);
+    },
+    async getPreparedPhotos({ commit }) {
+      if (localStorage.preparedphotos) {
+        commit('SET_PREPAREDPHOTOS', JSON.parse(localStorage.preparedphotos));
+      }
+      const response = await api.post(null, 'photos/split');
+      console.log('Prepared Photos', response.data);
+      localStorage.preparedphotos = JSON.stringify(response.data);
+      commit('SET_PREPAREDPHOTOS', response.data);
     },
     getWindowSize({ commit }) {
       const size = { x: window.innerWidth, y: window.innerHeight };

@@ -58,7 +58,7 @@
             <template v-slot:activator="{ on }">
               <a
                 :download="overlayProp.photo.filename"
-                :href="'https://kallers.se/images/2k/' + overlayProp.photo.filename"
+                :href="'https://kallers.se' + overlayProp.photo.high_path"
               >
                 <v-btn color="primary" class="ml-2" v-on="on">
                   <v-icon size="20">mdi-download</v-icon>

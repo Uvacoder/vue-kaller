@@ -95,7 +95,6 @@ export default {
     }
   },
   created() {
-    this.requestPhotos();
   },
   mounted() {},
   components: {

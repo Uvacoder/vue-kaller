@@ -61,7 +61,7 @@
             <v-icon size="20">mdi-share-variant</v-icon>
           </v-btn>
         </navigator-share>
-        <a :download="photo.filename" :href="'https://kallers.se/images/2k/' + photo.filename">
+        <a :download="photo.filename" :href="'https://kallers.se' + photo.high_path">
           <v-btn color="primary" class="ml-2">
             <v-icon size="20">mdi-download</v-icon>
           </v-btn>
