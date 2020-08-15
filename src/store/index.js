@@ -4,7 +4,7 @@ import api from "../services/api.js";
 
 Vue.use(Vuex);
 
-const dev = "http://kaller.test";
+const dev = "http://kallers.test";
 const pro = "https://kallers.se";
 
 export default new Vuex.Store({

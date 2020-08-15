@@ -1,5 +1,5 @@
 
-const dev = "https://kaller.test";
+const dev = "https://kallers.test";
 const pro = "https://kallers.se";
 
 export default {
