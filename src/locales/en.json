@@ -21,11 +21,11 @@
     "about": "Martin Kaller, swedish based landscape photographer sharing his photography journey. Photographs are shot with Sony A7II together with the FE 16-35 F4 or Canon 70-200 F4. To capture the wonder of the landscapes I enjoy being out before the sun is up. As the sun rises my camera is mounted on the tripod and I'm ready to capture the beauty of the scene. Usually my photographs are around water, I think it helps lift the composition. My goal is to share the beauty of nature and what it has to offer, as well as sharing some of my favorite spots mainly around Linköping but also the whole of Sweden."
   },
   "navs": {
-    "portfolio": "portfolio",
-    "photography": "photography",
-    "locations": "locations",
-    "contact": "contact",
-    "dashboard": "dashboard",
+    "portfolio": "Home",
+    "photography": "Photography",
+    "locations": "Locations",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
     "prints": "Prints"
   },
   "home": {
