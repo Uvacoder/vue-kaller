@@ -62,7 +62,7 @@
             >
               <v-img
                 :aspect-ratio="7/4"
-                :src="'https://kallers.se/images/low/'+location.photos[0]"
+                :src="$host+location.photos[0].high_path"
                 class="imgtext"
                 gradient="to top right, rgba(0,0,0,.3), rgba(0,0,0,.3)"
               >
@@ -105,16 +105,16 @@ export default {
       order: {
         reverse: "",
         justify: "start",
-        icon: "mdi-sort-descending"
-      }
+        icon: "mdi-sort-descending",
+      },
     };
   },
   computed: {
-    ...mapState(["locations", "windowSize"])
+    ...mapState(["locations", "windowSize"]),
   },
   methods: {
     getNames() {
-      this.locations.map(object => {
+      this.locations.map((object) => {
         this.locationNames.push(object.name);
       });
     },
@@ -145,7 +145,7 @@ export default {
         }
         return 0;
       }
-    }
+    },
   },
   mounted() {
     this.getNames();
@@ -153,12 +153,12 @@ export default {
   },
   watch: {
     locations: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         console.log(val);
         this.getNames();
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 

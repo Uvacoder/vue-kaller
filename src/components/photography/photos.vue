@@ -58,6 +58,16 @@
             </v-hover>
           </div>
         </v-col>
+        <v-col cols="12">
+          <v-row justify="center">
+            <v-btn
+              @click="loadmorephotos()"
+              :loading="loadmore.loading"
+              color="primary"
+              v-show="!loadmore.loaded"
+            >Load more photos</v-btn>
+          </v-row>
+        </v-col>
       </v-row>
     </v-container>
   </div>
@@ -68,6 +78,7 @@ import Overlay from "./PhotoOverlay";
 import photoCard from "./photoCard";
 import { mapState } from "vuex";
 import "../../services/findKey.js";
+import axios from "axios";
 
 export default {
   name: "Photos",
@@ -81,14 +92,14 @@ export default {
         width: "",
         height: "",
         index: 0,
-        fullscreen: false
+        fullscreen: false,
       },
       paddingSize: 2,
       splitPhotos: {},
       order: {
         reverse: "",
         justify: "start",
-        icon: "mdi-sort-descending"
+        icon: "mdi-sort-descending",
       },
       columns: {
         amount: 6,
@@ -108,17 +119,21 @@ export default {
           "mdi-numeric-9-box-multiple-outline",
           "mdi-numeric-9-plus-box-multiple-outline",
           "mdi-numeric-9-plus-box-multiple-outline",
-          "mdi-numeric-9-plus-box-multiple-outline"
-        ]
+          "mdi-numeric-9-plus-box-multiple-outline",
+        ],
       },
-      text: true
+      text: true,
+      loadmore: {
+        loading: false,
+        loaded: false,
+      },
     };
   },
   props: {
-    photo: Object
+    photo: Object,
   },
   computed: {
-    ...mapState(["photos", "windowSize","preparedPhotos"])
+    ...mapState(["photos", "windowSize", "preparedPhotos"]),
   },
   methods: {
     showOverlay(photo = this.overlayProp.photo, active = true, router = true) {
@@ -212,40 +227,29 @@ export default {
       if (this.$route.params.photo) {
         this.photos
           .findKey(this.$route.params.photo, "filename")
-          .then(photo => {
+          .then((photo) => {
             this.showOverlay(photo, true, false);
           });
       } else this.overlay = false;
     },
     //Splits the array of photos in cols in the right order
-    splitPhotosV2(cols) {
+    async splitPhotosV2(cols) {
       this.columns.amount = cols;
       this.columns.mode = this.columns.allowedSizes.indexOf(cols);
       //Grid size
       this.columns.size = 12 / cols;
       console.log(this.columns.size);
 
-      // const photos = this.photos;
-      // let splitPhotos = [];
-      // let heights = [];
-
-      // //adds one photo in each cols amount of arryas
-      // for (let i = 0; i < cols; i++) {
-      //   splitPhotos[i] = [photos[i]];
-      //   heights[i] = photos[i].height / photos[i].width;
-      // }
-
-      // //checks which column contains the images with the least amount of height and ads one more imahe to that array
-      // this.photos.forEach(async (photo, index) => {
-      //   if (index > cols - 1) {
-      //     const temp = Math.min(...heights);
-      //     const key = heights.indexOf(temp);
-      //     splitPhotos[key].push(photo);
-      //     heights[key] += photo.height / photo.width;
-      //   }
-      // });
-      // console.log("Split photos", splitPhotos);
-      this.splitPhotos = this.preparedPhotos[cols-1];
+      // this.splitPhotos = this.preparedPhotos[cols];
+      const res = await axios.get(
+        `https://kaller.test/api/photos/split/${cols + 1}/${cols * 5}`
+      );
+      this.splitPhotos = res.data.data;
+      this.loadmore = {
+        loading: false,
+        loaded: false,
+      };
+      console.log("is this working????", this.splitPhotos);
       if (Math.max(...this.columns.allowedSizes) === this.columns.amount) {
         this.text = false;
       } else this.text = true;
@@ -290,13 +294,21 @@ export default {
     },
     test(photo) {
       this.hover = true;
-    }
+    },
+    async loadmorephotos() {
+      this.loadmore.loading = true;
+      const res = await axios.get(
+        `https://kaller.test/api/photos/split/${this.columns.amount + 1}`
+      );
+      this.splitPhotos = res.data.data;
+      this.loadmore.loaded = true;
+    },
   },
   created() {
     console.log(this.$vuetify.breakpoint.sm);
     setTimeout(() => (this.show = true), 1);
     window.addEventListener("resize", this.onResize);
-    window.addEventListener("keydown", e => this.shortcuts(e));
+    window.addEventListener("keydown", (e) => this.shortcuts(e));
   },
   mounted() {
     if (this.photos.length) {
@@ -307,29 +319,30 @@ export default {
   },
   watch: {
     photos: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.photoSelected();
         this.onResize();
         this.initiatePhotos();
-      }
-    }
+      },
+    },
   },
   components: {
     Overlay,
-    photoCard
+    photoCard,
   },
   beforeRouteUpdate(to, from, next) {
     //If browser presses backbutton overlay needs to be changed but since the component is still alive that didnt do it by itself
     next();
     this.photoSelected();
   },
-  beforeRouteEnter(to, from, next) {
-    //since the component isn't rendered at this stage you need to use the viewmodel
-    next(vm => {
-      vm.photoSelected();
-      next();
-    });
-  }
+  //uhm could remove this and dont see a difference
+  // beforeRouteEnter(to, from, next) {
+  //   //since the component isn't rendered at this stage you need to use the viewmodel
+  //   next((vm) => {
+  //     vm.photoSelected();
+  //     next();
+  //   });
+  // },
 };
 </script>
 

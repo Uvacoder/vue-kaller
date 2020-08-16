@@ -103,71 +103,147 @@
           </v-card>
         </div>
       </div>
+
       <div class="pa-2">
-        <v-card dark>
-          <v-card-title>
-            Database
-            <v-spacer></v-spacer>
-            <v-text-field v-model="search" label="Search" single-line hide-details></v-text-field>
-          </v-card-title>
-          <v-data-table
-            :headers="headers"
-            :items="photos"
-            :search="search"
-            :items-per-page="100"
-            hide-default-footer
-            show-expand
-            single-expand
-          >
-            <template v-slot:expanded-item="{ item }">
-              <div class="d-block d-md-flex">
-                <div :class="{'expandedtext': $vuetify.breakpoint.mdAndUp, 'pa-2': true}">
-                  <v-chip class="ma-2" color="primary">ID</v-chip>
-                  {{item.id}}
-                  <v-spacer></v-spacer>
-                  <v-chip class="ma-2" color="primary">Date</v-chip>
-                  {{item.date}}
-                  <v-spacer></v-spacer>
-                  <v-chip class="ma-2" color="primary">Pre path</v-chip>
-                  {{item.prepath}}
-                  <v-spacer></v-spacer>
-                  <v-chip class="ma-2" color="primary">Low path</v-chip>
-                  {{item.path}}
-                  <v-spacer></v-spacer>
-                  <v-chip class="ma-2" color="primary">2k path</v-chip>
-                  {{item.highpath}}
-                  <v-spacer></v-spacer>
-                  <v-chip class="ma-2" color="primary">Path</v-chip>
-                  /images/highres/{{item.filename}}
-                  <v-spacer></v-spacer>
-                  <v-btn color="warning" @click="photoResize(item.filename)">Resize</v-btn>
-                  <v-btn color="success" @click="photoHide(item.filename)">Hide</v-btn>
-                  <v-btn color="error" @click="photoDelete(item.filename)">Delete</v-btn>
-                </div>
-                <v-spacer></v-spacer>
-                <div>
-                  <img :src="$host + item.path" style="height: 200px" />
-                </div>
-              </div>
+        <v-card dark flat>
+          <v-simple-table height="300px">
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left">Name</th>
+                  <th class="text-left"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="location in locations" :key="location.name">
+                  <td>{{ location.name }}</td>
+                  <td>
+                    <v-btn color="warning" @click="openTextEditor(location)">Edit</v-btn>
+                  </td>
+                </tr>
+              </tbody>
             </template>
-            <template v-slot:item.photo="{ item }">
-              <img :src="$host + item.prepath" style="height: 60px" />
-            </template>
-            <template v-slot:item.dim="{ item }">{{ item.width }} x {{item.height}}</template>
-          </v-data-table>
+          </v-simple-table>
         </v-card>
+      </div>
+
+      <div class="pa-2">
+        <v-data-iterator
+          :items="photos"
+          :items-per-page="300"
+          :page="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+        >
+          <template v-slot:header>
+            <v-toolbar dark class="mb-1">
+              <h1>Database</h1>
+              <v-spacer></v-spacer>
+              <v-spacer></v-spacer>
+              <v-text-field
+                v-model="search"
+                clearable
+                flat
+                solo-inverted
+                hide-details
+                label="Search"
+              ></v-text-field>
+            </v-toolbar>
+          </template>
+
+          <template v-slot:default="props">
+            <v-row>
+              <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="4" lg="3">
+                <v-card dark>
+                  <v-card-title class="subheading font-weight-bold">{{ item.filename }}</v-card-title>
+
+                  <img :src="$host + item.low_path" style="height: 180px" />
+                  <v-divider></v-divider>
+
+                  <v-list dense>
+                    <v-list-item>
+                      <v-list-item-content
+                        class="align-end"
+                      >{{ item.width}} x {{ item.height}} pixels</v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-list-item-content class="align-end">{{$host + item.org_path }}</v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-list-item-content class="align-end">{{ item.lens }}</v-list-item-content>
+                    </v-list-item>
+
+                    <v-list-item>
+                      <v-list-item-content class="align-end">{{ item.location }}</v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                  <v-btn color="warning" @click="photoResize(item.filename)">Resize</v-btn>
+                  <v-btn color="success" @click="photoAddLocation(item.filename)">Add Location</v-btn>
+                  <v-btn color="error" @click="photoDelete(item.filename)">Delete</v-btn>
+                </v-card>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
       </div>
       <v-snackbar v-model="snackbar" :color="snackcolor">
         {{ text }}
         <v-btn color="white" text @click="snackbar = false">Close</v-btn>
       </v-snackbar>
     </v-container>
+
+    <v-dialog v-model="dialog" scrollable max-width="300px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
+      </template>
+      <v-card>
+        <v-card-title>Select Country</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <v-radio-group v-model="choosenLocation" column>
+            <v-radio
+              v-for="location in locations"
+              :label="location.name"
+              :value="location.id"
+              v-bind:key="location.id"
+            ></v-radio>
+          </v-radio-group>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click="saveLocationToPhoto">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="textdialog" scrollable max-width="300px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">Open Dialog</v-btn>
+      </template>
+      <v-card>
+        <v-card-title>JSON editor</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <v-textarea :value="textdialogvalue" auto-grow></v-textarea>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-btn color="blue darken-1" text @click="textdialog = false">Close</v-btn>
+          <!-- <v-btn color="blue darken-1" text @click="saveLocationToPhoto">Save</v-btn> -->
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import api from "../services/api.js";
 import { mapState } from "vuex";
+import Axios from "axios";
 
 const gradients = [
   ["#222"],
@@ -175,16 +251,16 @@ const gradients = [
   ["red", "orange", "yellow"],
   ["purple", "violet"],
   ["#00c6ff", "#F0F", "#FF0"],
-  ["#f72047", "#ffd200", "#1feaea"]
+  ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
   name: "Admin.vue",
   computed: {
-    ...mapState(["photos"])
+    ...mapState(["photos", "locations"]),
   },
   methods: {
-    db: async function() {
+    db: async function () {
       this.loader = "loading1";
       console.log(this.$auth);
       this.text = await api.post(
@@ -198,7 +274,7 @@ export default {
       this.loading1 = false;
       this.loadStats();
     },
-    resize: async function() {
+    resize: async function () {
       this.loader = "loading2";
       this.text = await api.post(
         { mode: "resize", auth: localStorage.auth },
@@ -211,7 +287,7 @@ export default {
       this.loading2 = false;
       this.loadStats();
     },
-    reload: async function() {
+    reload: async function () {
       this.loader = "loading3";
       this.text = await api.post({ auth: localStorage.auth }, "reload");
       this.snackbar = true;
@@ -221,8 +297,8 @@ export default {
       this.loading3 = false;
       this.loadStats();
     },
-    loadStats: function() {
-      api.post(null, "graph").then(r => {
+    loadStats: function () {
+      api.post(null, "graph").then((r) => {
         console.log(r);
         for (let i = 0; i < r["month"].length; i++) {
           r["month"][i] = parseInt(r["month"][i]);
@@ -236,7 +312,7 @@ export default {
       });
       this.$store.dispatch("getPhotos");
     },
-    fileChange: function(file) {
+    fileChange: function (file) {
       console.log(file);
       this.file = file;
     },
@@ -263,10 +339,14 @@ export default {
       this.$store.dispatch("getPhotos");
     },
     async photoDelete(filename) {
-      this.text = await api.post(
-        { filename: filename, auth: localStorage.auth },
-        "deletephoto"
-      );
+      const json = JSON.stringify({ data: filename, auth: localStorage.auth });
+      const res = await Axios.post(this.$host + "/api/photos/delete", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
+      this.text = res.data.data;
       this.snackcolor = "error";
       this.snackbar = true;
       this.loadStats();
@@ -301,7 +381,56 @@ export default {
       this.snackbar = true;
       this.loadStats();
       this.$store.dispatch("getPhotos");
-    }
+    },
+    photoAddLocation(filename) {
+      this.dialog = true;
+      this.currentfilenamedialog = filename;
+    },
+    async saveLocationToPhoto() {
+      const json = JSON.stringify({
+        data: {
+          filename: this.currentfilenamedialog,
+          location_id: this.choosenLocation,
+        },
+        auth: localStorage.auth,
+      });
+      const res = await Axios.post(this.$host + "/api/photos/update", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
+      this.text = res.data.data;
+      this.snackbar = true;
+      this.snackcolor = "success";
+      this.dialog = false;
+    },
+    async openTextEditor(location) {
+      this.textdialog = true;
+      this.textdialogvalue = `
+      {
+        id: "${location.id}"
+        name: "${location.name}",
+        description: "${location.description}",
+      }
+      `;
+    },
+    async saveJson() {
+      const json = JSON.stringify({
+        data: this.textdialogvalue,
+        auth: localStorage.auth,
+      });
+      const res = await Axios.post(this.$host + "/api/locations/update", json, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res);
+      this.text = res.data.data;
+      this.snackbar = true;
+      this.snackcolor = "success";
+      this.dialog = false;
+    },
   },
   data() {
     return {
@@ -323,9 +452,8 @@ export default {
         { text: "Date", value: "date_string", align: "center" },
         { text: "Lens shoot with", value: "lens", align: "center" },
         { text: "width x height", value: "dim", align: "center" },
-        { text: "Month", value: "month", align: "center" }
+        { text: "Month", value: "month", align: "center" },
       ],
-      search: "",
 
       gradient: gradients[5],
       value: [],
@@ -342,14 +470,26 @@ export default {
         "September",
         "October",
         "November",
-        "December"
+        "December",
       ],
       lensLabels: [
         "DJI Phantom 3",
         "Canon EF 70-200 f4L",
         "Sony FE 16-35 F4",
-        "Minolta 45 F2"
-      ]
+        "Minolta 45 F2",
+      ],
+      itemsPerPageArray: [4, 8, 12],
+      search: "",
+      filter: {},
+      sortDesc: true,
+      page: 2,
+      itemsPerPage: 4,
+      sortBy: "date",
+      dialog: false,
+      currentfilenamedialog: "",
+      choosenLocation: "",
+      textdialog: false,
+      textdialogvalue: "",
     };
   },
   watch: {
@@ -357,12 +497,12 @@ export default {
       const l = this.loader;
       this[l] = !this[l];
       this.loader = null;
-    }
+    },
   },
   created() {
     this.loadStats();
     console.log("hej");
-  }
+  },
 };
 </script>
 

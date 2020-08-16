@@ -29,6 +29,6 @@ new Vue({
 
 
 store.dispatch('getPhotos');
-store.dispatch('getPreparedPhotos');
+// store.dispatch('getPreparedPhotos');
 store.dispatch('getWindowSize');
 store.dispatch('getLocations');

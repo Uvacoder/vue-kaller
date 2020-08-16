@@ -61,8 +61,7 @@ const routes = [
         name: "Admin",
         component: Admin,
         beforeEnter: async (to, from, next) => {
-          console.log("isAuth: ", await isAuth());
-          if (await isAuth()) {
+          if (localStorage.auth) {
             next();
           } else {
             next("/login");

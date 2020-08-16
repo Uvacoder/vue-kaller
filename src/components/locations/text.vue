@@ -5,11 +5,7 @@
       <v-btn color="white" text @click="snackbar = false">Close</v-btn>
     </v-snackbar>
     <p class="title px-3 pt-3 ma-0">{{location.coords}}</p>
-    <p
-      class="body-1 px-3 pt-3 ma-0"
-      v-for="(paragraf,index) in location.paragrafs"
-      v-bind:key="index"
-    >{{paragraf}}</p>
+    <p class="body-1 px-3 pt-3 ma-0" v-bind:key="index">{{location.description}}</p>
 
     <div class="d-flex px-3 py-3 ma-0">
       <v-tooltip bottom>
@@ -86,11 +82,11 @@ import "../../services/unswedifyString";
 export default {
   name: "locationText",
   props: {
-    location: Object
+    location: Object,
   },
   data() {
     return {
-      snackbar: false
+      snackbar: false,
     };
   },
   methods: {
@@ -102,13 +98,13 @@ export default {
       );
       this.snackbar = true;
     },
-    doCopy: function(text) {
+    doCopy: function (text) {
       this.$copyText(text);
-    }
+    },
   },
   components: {
-    NavigatorShare
-  }
+    NavigatorShare,
+  },
 };
 </script>
 

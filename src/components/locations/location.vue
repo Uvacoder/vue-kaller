@@ -62,7 +62,7 @@
                   :key="index"
                   :to="'/' + $i18n.locale + '/photography/' + photo"
                 >
-                  <v-img :src="'https://kallers.se/images/2k/'+photo"></v-img>
+                  <v-img :src="$host+photo.low_path"></v-img>
                 </v-card>
               </masonry>
             </v-card>
@@ -113,16 +113,16 @@ export default {
       order: {
         reverse: "",
         justify: "start",
-        icon: "mdi-sort-descending"
-      }
+        icon: "mdi-sort-descending",
+      },
     };
   },
   components: {
     locationHeader,
-    locationText
+    locationText,
   },
   computed: {
-    ...mapState(["locations", "windowSize", "photos"])
+    ...mapState(["locations", "windowSize", "photos"]),
   },
   created() {
     console.log("HELLO?????", this.$route.params.location);
@@ -136,7 +136,7 @@ export default {
       if (this.locations) {
         this.locations
           .findKey(this.$route.params.location, "name")
-          .then(location => {
+          .then((location) => {
             if (location) {
               console.log("LOCATION SELECTED", location);
               this.location = location;
@@ -147,7 +147,7 @@ export default {
       }
     },
     getNames() {
-      this.locations.map(object => {
+      this.locations.map((object) => {
         this.locationNames.push(object.name);
       });
     },
@@ -166,22 +166,22 @@ export default {
         "https://www.google.com/maps/search/?api=1&query=" + this.location.name,
         "_blank"
       );
-    }
+    },
   },
   watch: {
     locations: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.selectedLocation();
         this.getNames();
-      }
+      },
     },
     $route: {
-      handler: function(val, oldVal) {
+      handler: function (val, oldVal) {
         this.selectedLocation();
         this.getNames();
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
 
